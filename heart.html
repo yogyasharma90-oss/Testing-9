@@ -5,256 +5,127 @@
 <title>Heart Game</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: #0b0b0b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
+body{
+  margin:0;
+  background:#0b0b0b;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
 }
 
 /* HEART */
-#heart-container {
-  position: relative;
-  width: 220px;
-  height: 200px;
+#heartBox{
+  position:relative;
+  width:260px;
+  text-align:center;
 }
 
-.heart {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: 4px solid white;
-  transform: rotate(-45deg);
-  border-radius: 12px;
-  overflow: hidden;
+svg{
+  width:260px;
+  height:240px;
 }
 
-.heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 4px solid white;
-  border-radius: 50%;
+#fill{
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s ease;
 }
 
-.heart::before {
-  top: -50%;
-  left: 0;
+#msg{
+  margin-top:10px;
+  color:white;
 }
 
-.heart::after {
-  left: 50%;
-  top: 0;
+/* OPENING */
+.opened .left{
+  transform: rotateY(-130deg);
+}
+.opened .right{
+  transform: rotateY(130deg);
 }
 
-/* FILL */
-#fill {
-  position: absolute;
-  width: 100%;
-  height: 0%;
-  bottom: 0;
-  background: red;
-  transition: height 1s ease;
+.left,.right{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:240px;
+  background:red;
+  transition:1.2s ease;
+  z-index:5;
 }
+.left{left:0;transform-origin:left;}
+.right{right:0;transform-origin:right;}
 
-/* MESSAGE */
-#msg {
-  position: absolute;
-  top: 230px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 16px;
+/* FINAL BUTTON */
+#finalBtn{
+  display:none;
+  margin-top:20px;
+}
+#finalBtn button{
+  padding:12px 24px;
+  border-radius:25px;
+  border:none;
+  font-size:16px;
 }
 
 /* PALETTE */
-#palette {
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  background: white;
-  padding: 16px;
-  border-radius: 18px;
-  cursor: grab;
+#palette{
+  position:absolute;
+  right:30px;
+  bottom:30px;
+  background:white;
+  padding:14px;
+  border-radius:18px;
+  cursor:grab;
 }
 
-.palette-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  gap: 14px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,60px);
+  gap:12px;
 }
 
-.color {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  box-shadow: inset -4px -4px 8px rgba(0,0,0,0.2);
+.color,.red{
+  width:60px;
+  height:60px;
+  border-radius:12px;
+  box-shadow:inset -4px -4px 8px rgba(0,0,0,0.3);
 }
 
 /* COLORS */
-.c1 { background:#f4a261 }
-.c2 { background:#e9c46a }
-.c3 { background:#2a9d8f }
-.c4 { background:#264653 }
-.c5 { background:#3a86ff }
-.c6 { background:#8338ec }
-.c7 { background:#ffafcc }
-.c8 { background:#cdb4db }
-.c9 { background:#9d4edd }
+.c1{background:#f4a261}
+.c2{background:#e9c46a}
+.c3{background:#2a9d8f}
+.c4{background:#264653}
+.c5{background:#3a86ff}
+.c6{background:#8338ec}
+.c7{background:#ffafcc}
+.c8{background:#cdb4db}
+.c9{background:#9d4edd}
 
-/* HIDDEN RED */
-#hidden-red {
-  position: absolute;
-  bottom: -110px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+/* RED */
+#redWrap{
+  margin-top:14px;
+  text-align:center;
 }
-
-#hidden-red p {
-  color: white;
-  margin-bottom: 8px;
+#redWrap p{
+  color:black;
+  font-size:12px;
 }
-
-.red {
-  width: 70px;
-  height: 70px;
-  background: #d00000;
-  border-radius: 14px;
-  box-shadow: inset -6px -6px 10px rgba(0,0,0,0.3);
-}
-
-/* HEART OPEN */
-.open-left, .open-right {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  background: red;
-  top: 0;
-  z-index: 5;
-  transition: transform 1.2s ease;
-}
-
-.open-left {
-  left: 0;
-  transform-origin: left;
-}
-
-.open-right {
-  right: 0;
-  transform-origin: right;
-}
-
-.opened .open-left {
-  transform: rotateY(-140deg);
-}
-
-.opened .open-right {
-  transform: rotateY(140deg);
-}
-
-/* FINAL BUTTON */
-#final-btn {
-  display: none;
-  position: absolute;
-  top: 270px;
-  width: 100%;
-  text-align: center;
-}
-
-#final-btn button {
-  padding: 12px 22px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  background: white;
-}
+.red{background:#d00000}
 </style>
 </head>
 
 <body>
 
-<div id="heart-container">
-  <div class="heart">
-    <div id="fill"></div>
-    <div class="open-left"></div>
-    <div class="open-right"></div>
-  </div>
-  <div id="msg">Color it ❤️</div>
-  <div id="final-btn">
-    <button>Good boy now click it</button>
-  </div>
-</div>
+<div id="heartBox">
+  <svg viewBox="0 0 32 29">
+    <path d="M23.6,0c-3.4,0-6.4,2.1-7.6,5.1C14.8,2.1,11.8,0,8.4,0
+    C3.8,0,0,3.8,0,8.4c0,9.4,16,20.6,16,20.6s16-11.2,16-20.6
+    C32,3.8,28.2,0,23.6,0z"
+    fill="none" stroke="white" stroke-width="1.5"/>
 
-<!-- PALETTE -->
-<div id="palette">
-  <div class="palette-grid">
-    <div class="color c1"></div>
-    <div class="color c2"></div>
-    <div class="color c3"></div>
-    <div class="color c4"></div>
-    <div class="color c5"></div>
-    <div class="color c6"></div>
-    <div class="color c7"></div>
-    <div class="color c8"></div>
-    <div class="color c9"></div>
-  </div>
-
-  <div id="hidden-red">
-    <p>specially for you ❤️</p>
-    <div class="red"></div>
-  </div>
-</div>
-
-<script>
-/* DRAG PALETTE */
-let palette = document.getElementById("palette");
-let drag = false, ox, oy;
-
-palette.onmousedown = e => {
-  drag = true;
-  ox = e.clientX - palette.offsetLeft;
-  oy = e.clientY - palette.offsetTop;
-};
-
-document.onmousemove = e => {
-  if (!drag) return;
-  palette.style.left = e.clientX - ox + "px";
-  palette.style.top = e.clientY - oy + "px";
-};
-
-document.onmouseup = () => drag = false;
-
-/* COLOR LOGIC */
-const wrongColors = document.querySelectorAll(".color");
-const red = document.querySelector(".red");
-const fill = document.getElementById("fill");
-const msg = document.getElementById("msg");
-const heart = document.querySelector(".heart");
-const btn = document.getElementById("final-btn");
-
-wrongColors.forEach(c => {
-  c.onclick = () => {
-    msg.innerText = "nahh try again 😭";
-  };
-});
-
-red.onclick = () => {
-  fill.style.height = "100%";
-  msg.innerText = "Good ❤️";
-  setTimeout(() => {
-    heart.classList.add("opened");
-    btn.style.display = "block";
-  }, 1200);
-};
-</script>
-
-</body>
-</html>
+    <path id="fill"
+    d="M23.6,0c
