@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+
+  #countdown {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .message {
+    position: absolute;
+    bottom: -50px;
+    font-size: 20px;
+    color: white;
+    background: rgba(255, 105, 180, 0.9);
+    padding: 10px 16px;
+    border-radius: 20px;
+    animation: floatUp 6s linear forwards;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-120vh); opacity: 0; }
+  }
+
+  #birthdayPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 999;
+  }
+
+  #birthdayPopup h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.7);
+  }
+
+  #giftBox {
+    background: hotpink;
+    color: white;
+    padding: 14px 45px;
+    border-radius: 50px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255,105,180,0.7);
+    transition: transform 0.25s ease;
+  }
+
+  #giftBox:hover {
+    transform: scale(1.1);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- SAFE IMAGE SPOT -->
+<img src="yourimage.png" 
+     alt="cute image"
+     style="position:absolute; top:20px; left:20px; width:200px; border-radius:20px; z-index:5;">
+
+<div id="countdown">01:00</div>
+<canvas id="confetti"></canvas>
+
+<div id="birthdayPopup">
+  <h1>HAPPY BIRTHDAY LOVE</h1>
+  <div id="giftBox">GIFT?</div>
+</div>
+
+<script>
+let time = 60;
+const countdownEl = document.getElementById("countdown");
+
+function updateCountdown() {
+  const min = Math.floor(time / 60);
+  const sec = time % 60;
+  countdownEl.textContent =
+    `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+}
+updateCountdown();
+
+const timer = setInterval(() => {
+  time--;
+  if (time < 0) {
+    clearInterval(timer);
+    countdownEl.style.display = "none";
+    partyPopper();
+    startMessages();
+    document.getElementById("birthdayPopup").style.display = "block";
+  } else {
+    updateCountdown();
+  }
+}, 1000);
+
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createPopper(x, y, dir) {
+  for (let i = 0; i < 160; i++) {
+    particles.push({
+      x, y,
+      vx: (Math.random() * 12 + 6) * dir,
+      vy: -Math.random() * 14 - 6,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 4 + 2,
+      r: Math.random() * 360,
+      rs: Math.random() * 8 - 4,
+      c: Math.random() > 0.5
+        ? "rgba(212,175,55,0.95)"
+        : "rgba(220,220,220,0.95)",
+      life: 200
+    });
+  }
+}
+
+function partyPopper() {
+  createPopper(0, canvas.height, 1);
+  createPopper(canvas.width, canvas.height, -1);
+  animateConfetti();
+}
+
+function animateConfetti() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i) => {
+    ctx.save();
+    ctx.translate(p.x,p.y);
+    ctx.rotate(p.r * Math.PI/180);
+    ctx.fillStyle = p.c;
+    ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+    ctx.restore();
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.r+=p.rs; p.life--;
+    if(p.life<=0) particles.splice(i,1);
+  });
+  if(particles.length) requestAnimationFrame(animateConfetti);
+}
+
+const messages = [
+  "Happy Birthday Love 💖",
+  "I Love You Forever ♾️",
+  "You're My Home 💕",
+  "Mine Always 💌",
+  "Best Boyfriend Ever 😭",
+  "Forever & Always 💞"
+];
+
+function startMessages() {
+  setInterval(() => {
+    const msg = document.createElement("div");
+    msg.className = "message";
+    msg.textContent = messages[Math.floor(Math.random()*messages.length)];
+    msg.style.left = Math.random()*80 + "vw";
+    document.body.appendChild(msg);
+    setTimeout(()=>msg.remove(),6000);
+  }, 450);
+}
+
+document.getElementById("giftBox").onclick = () => {
+  window.location.href = "gift.html";
+};
+</script>
+
+</body>
+</html>
