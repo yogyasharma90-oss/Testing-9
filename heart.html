@@ -2,131 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Color Heart ❤️</title>
+<title>Color My Heart ❤️</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: #fff0f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Segoe UI", sans-serif;
-  overflow: hidden;
+body{
+  margin:0;
+  height:100vh;
+  background:#fff0f6;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:"Segoe UI",sans-serif;
+  overflow:hidden;
 }
 
 /* HEART */
-#heart-container {
-  position: relative;
-  width: 260px;
-  height: 240px;
-  cursor: pointer;
+#heart-wrapper{
+  position:relative;
+  width:260px;
+  height:220px;
+  margin-bottom:30px;
 }
 
-.heart {
-  position: absolute;
-  width: 130px;
-  height: 200px;
-  background: #ffe6eb;
-  border-radius: 100px 100px 0 0;
-  top: 0;
-  transition: all 0.8s ease;
+.heart-half{
+  position:absolute;
+  width:130px;
+  height:200px;
+  background:#ffe6eb;
+  border-radius:100px 100px 0 0;
+  top:0;
+  transition:transform 0.9s ease;
 }
 
-.left {
-  left: 65px;
-  transform: rotate(-45deg);
-  transform-origin: bottom right;
+.left{
+  left:65px;
 }
 
-.right {
-  left: 65px;
-  transform: rotate(45deg);
-  transform-origin: bottom left;
+.right{
+  left:65px;
 }
 
-/* OPEN HEART */
-.open .left {
-  transform: rotate(-90deg) translateX(-80px);
+/* CARD OPEN — NO SHAPE CHANGE */
+.open .left{
+  transform:translateX(-150px);
 }
-.open .right {
-  transform: rotate(90deg) translateX(80px);
+.open .right{
+  transform:translateX(150px);
 }
 
 /* MESSAGE */
-#msg {
-  position: absolute;
-  bottom: -80px;
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  color: hotpink;
-  font-weight: bold;
+#msg{
+  margin-top:10px;
+  font-weight:bold;
+  color:hotpink;
+  text-align:center;
 }
 
 /* PALETTE */
-#palette {
-  position: fixed;
-  right: 20px;
-  bottom: 120px;
-  background: white;
-  padding: 12px;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.15);
-  display: flex;
-  gap: 10px;
-  cursor: grab;
+#palette{
+  position:absolute;
+  bottom:140px;
+  background:white;
+  padding:12px 18px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(0,0,0,0.15);
+  display:flex;
+  gap:12px;
+  cursor:grab;
+  z-index:5;
 }
 
-.color {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
+.color{
+  width:26px;
+  height:26px;
+  border-radius:50%;
 }
 
-/* COLORS */
-.pink { background: #ffb6c1; }
-.purple { background: #cdb4db; }
-.blue { background: #bde0fe; }
-.green { background: #caffbf; }
+.pink{background:#ffb6c1;}
+.purple{background:#cdb4db;}
+.blue{background:#bde0fe;}
+.green{background:#caffbf;}
 
-/* RED SECRET */
-#secret-red {
-  position: fixed;
-  bottom: 40px;
-  text-align: center;
+/* HIDDEN RED */
+#red-wrap{
+  margin-top:60px;
+  text-align:center;
 }
 
-#red {
-  width: 34px;
-  height: 34px;
-  background: red;
-  border-radius: 50%;
-  margin: auto;
+#red{
+  width:32px;
+  height:32px;
+  background:red;
+  border-radius:50%;
+  margin:auto;
+  cursor:pointer;
 }
 
 /* NEXT BUTTON */
-#nextBtn {
-  display: none;
-  margin-top: 20px;
-  padding: 12px 32px;
-  background: hotpink;
-  color: white;
-  border-radius: 30px;
-  cursor: pointer;
+#nextBtn{
+  display:none;
+  margin-top:20px;
+  padding:12px 36px;
+  background:hotpink;
+  color:white;
+  border-radius:30px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="heart-container">
-  <div class="heart left"></div>
-  <div class="heart right"></div>
-  <div id="msg">Color it 👺</div>
-</div>
-
+<!-- MOVABLE PALETTE -->
 <div id="palette">
   <div class="color pink"></div>
   <div class="color purple"></div>
@@ -134,59 +122,64 @@ body {
   <div class="color green"></div>
 </div>
 
-<div id="secret-red">
+<!-- HEART -->
+<div id="heart-wrapper">
+  <div class="heart-half left"></div>
+  <div class="heart-half right"></div>
+</div>
+
+<div id="msg">Color my heart 🥺</div>
+
+<!-- SECRET RED -->
+<div id="red-wrap">
   <div id="red"></div>
-  <div style="font-size:14px;color:red;">specially for you 😝</div>
+  <div style="font-size:14px;color:red;">specially for you ❤️</div>
 </div>
 
 <script>
-let selected = "";
 const msg = document.getElementById("msg");
-const heart = document.getElementById("heart-container");
+const heart = document.getElementById("heart-wrapper");
 
-document.querySelectorAll(".color").forEach(c => {
+/* WRONG COLORS */
+document.querySelectorAll(".color").forEach(c=>{
   c.onclick = () => {
-    selected = c.style.background;
-    msg.innerText = "nahh try again 🙄";
+    msg.innerText = "nahh try again 😭";
   };
 });
 
+/* CORRECT RED */
 document.getElementById("red").onclick = () => {
-  selected = "red";
-  document.querySelectorAll(".heart").forEach(h => {
+  document.querySelectorAll(".heart-half").forEach(h=>{
     h.style.background = "red";
   });
-  msg.innerText = "Good boy 😍 click it";
+  msg.innerText = "Good boy 😭 click it";
   heart.classList.add("open");
-  setTimeout(() => {
-    const btn = document.createElement("div");
-    btn.id = "nextBtn";
-    btn.innerText = "CLICK 💌";
-    btn.onclick = () => {
-      window.location.href = "gift.html"; // CHANGE IF NEEDED
-    };
-    msg.appendChild(btn);
-    btn.style.display = "inline-block";
-  }, 900);
+
+  const btn = document.createElement("div");
+  btn.id = "nextBtn";
+  btn.innerText = "CLICK 💌";
+  btn.onclick = () => window.location.href = "letter.html";
+  msg.appendChild(btn);
+  btn.style.display = "inline-block";
 };
 
-/* DRAG PALETTE */
-let isDown = false, x, y;
-const palette = document.getElementById("palette");
+/* DRAGGABLE PALETTE */
+let drag=false, dx, dy;
+const pal = document.getElementById("palette");
 
-palette.onmousedown = e => {
-  isDown = true;
-  x = e.clientX - palette.offsetLeft;
-  y = e.clientY - palette.offsetTop;
+pal.onmousedown = e=>{
+  drag=true;
+  dx=e.clientX-pal.offsetLeft;
+  dy=e.clientY-pal.offsetTop;
 };
 
-document.onmousemove = e => {
-  if (!isDown) return;
-  palette.style.left = e.clientX - x + "px";
-  palette.style.top = e.clientY - y + "px";
+document.onmousemove = e=>{
+  if(!drag) return;
+  pal.style.left = e.clientX-dx+"px";
+  pal.style.top = e.clientY-dy+"px";
 };
 
-document.onmouseup = () => isDown = false;
+document.onmouseup = ()=>drag=false;
 </script>
 
 </body>
