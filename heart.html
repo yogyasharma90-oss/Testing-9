@@ -2,130 +2,193 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Heart Game</title>
+<title>Color Heart ❤️</title>
 
 <style>
-body{
-  margin:0;
-  background:#0b0b0b;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  font-family:'Poppins',sans-serif;
+body {
+  margin: 0;
+  height: 100vh;
+  background: #fff0f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  overflow: hidden;
 }
 
 /* HEART */
-#heartBox{
-  position:relative;
-  width:260px;
-  text-align:center;
+#heart-container {
+  position: relative;
+  width: 260px;
+  height: 240px;
+  cursor: pointer;
 }
 
-svg{
-  width:260px;
-  height:240px;
+.heart {
+  position: absolute;
+  width: 130px;
+  height: 200px;
+  background: #ffe6eb;
+  border-radius: 100px 100px 0 0;
+  top: 0;
+  transition: all 0.8s ease;
 }
 
-#fill{
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1s ease;
+.left {
+  left: 65px;
+  transform: rotate(-45deg);
+  transform-origin: bottom right;
 }
 
-#msg{
-  margin-top:10px;
-  color:white;
+.right {
+  left: 65px;
+  transform: rotate(45deg);
+  transform-origin: bottom left;
 }
 
-/* OPENING */
-.opened .left{
-  transform: rotateY(-130deg);
+/* OPEN HEART */
+.open .left {
+  transform: rotate(-90deg) translateX(-80px);
 }
-.opened .right{
-  transform: rotateY(130deg);
+.open .right {
+  transform: rotate(90deg) translateX(80px);
 }
 
-.left,.right{
-  position:absolute;
-  top:0;
-  width:50%;
-  height:240px;
-  background:red;
-  transition:1.2s ease;
-  z-index:5;
-}
-.left{left:0;transform-origin:left;}
-.right{right:0;transform-origin:right;}
-
-/* FINAL BUTTON */
-#finalBtn{
-  display:none;
-  margin-top:20px;
-}
-#finalBtn button{
-  padding:12px 24px;
-  border-radius:25px;
-  border:none;
-  font-size:16px;
+/* MESSAGE */
+#msg {
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: hotpink;
+  font-weight: bold;
 }
 
 /* PALETTE */
-#palette{
-  position:absolute;
-  right:30px;
-  bottom:30px;
-  background:white;
-  padding:14px;
-  border-radius:18px;
-  cursor:grab;
+#palette {
+  position: fixed;
+  right: 20px;
+  bottom: 120px;
+  background: white;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  display: flex;
+  gap: 10px;
+  cursor: grab;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,60px);
-  gap:12px;
-}
-
-.color,.red{
-  width:60px;
-  height:60px;
-  border-radius:12px;
-  box-shadow:inset -4px -4px 8px rgba(0,0,0,0.3);
+.color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
 }
 
 /* COLORS */
-.c1{background:#f4a261}
-.c2{background:#e9c46a}
-.c3{background:#2a9d8f}
-.c4{background:#264653}
-.c5{background:#3a86ff}
-.c6{background:#8338ec}
-.c7{background:#ffafcc}
-.c8{background:#cdb4db}
-.c9{background:#9d4edd}
+.pink { background: #ffb6c1; }
+.purple { background: #cdb4db; }
+.blue { background: #bde0fe; }
+.green { background: #caffbf; }
 
-/* RED */
-#redWrap{
-  margin-top:14px;
-  text-align:center;
+/* RED SECRET */
+#secret-red {
+  position: fixed;
+  bottom: 40px;
+  text-align: center;
 }
-#redWrap p{
-  color:black;
-  font-size:12px;
+
+#red {
+  width: 34px;
+  height: 34px;
+  background: red;
+  border-radius: 50%;
+  margin: auto;
 }
-.red{background:#d00000}
+
+/* NEXT BUTTON */
+#nextBtn {
+  display: none;
+  margin-top: 20px;
+  padding: 12px 32px;
+  background: hotpink;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+}
 </style>
 </head>
 
 <body>
 
-<div id="heartBox">
-  <svg viewBox="0 0 32 29">
-    <path d="M23.6,0c-3.4,0-6.4,2.1-7.6,5.1C14.8,2.1,11.8,0,8.4,0
-    C3.8,0,0,3.8,0,8.4c0,9.4,16,20.6,16,20.6s16-11.2,16-20.6
-    C32,3.8,28.2,0,23.6,0z"
-    fill="none" stroke="white" stroke-width="1.5"/>
+<div id="heart-container">
+  <div class="heart left"></div>
+  <div class="heart right"></div>
+  <div id="msg">Color it 👺</div>
+</div>
 
-    <path id="fill"
-    d="M23.6,0c
+<div id="palette">
+  <div class="color pink"></div>
+  <div class="color purple"></div>
+  <div class="color blue"></div>
+  <div class="color green"></div>
+</div>
+
+<div id="secret-red">
+  <div id="red"></div>
+  <div style="font-size:14px;color:red;">specially for you 😝</div>
+</div>
+
+<script>
+let selected = "";
+const msg = document.getElementById("msg");
+const heart = document.getElementById("heart-container");
+
+document.querySelectorAll(".color").forEach(c => {
+  c.onclick = () => {
+    selected = c.style.background;
+    msg.innerText = "nahh try again 🙄";
+  };
+});
+
+document.getElementById("red").onclick = () => {
+  selected = "red";
+  document.querySelectorAll(".heart").forEach(h => {
+    h.style.background = "red";
+  });
+  msg.innerText = "Good boy 😍 click it";
+  heart.classList.add("open");
+  setTimeout(() => {
+    const btn = document.createElement("div");
+    btn.id = "nextBtn";
+    btn.innerText = "CLICK 💌";
+    btn.onclick = () => {
+      window.location.href = "gift.html"; // CHANGE IF NEEDED
+    };
+    msg.appendChild(btn);
+    btn.style.display = "inline-block";
+  }, 900);
+};
+
+/* DRAG PALETTE */
+let isDown = false, x, y;
+const palette = document.getElementById("palette");
+
+palette.onmousedown = e => {
+  isDown = true;
+  x = e.clientX - palette.offsetLeft;
+  y = e.clientY - palette.offsetTop;
+};
+
+document.onmousemove = e => {
+  if (!isDown) return;
+  palette.style.left = e.clientX - x + "px";
+  palette.style.top = e.clientY - y + "px";
+};
+
+document.onmouseup = () => isDown = false;
+</script>
+
+</body>
+</html>
+  
