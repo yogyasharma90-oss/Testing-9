@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 🫶🏻</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* IMAGE */
+  img {
+    width: 100vw;
+    max-width: 650px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,105,180,0.5);
+  }
+
+  /* TEXT */
+  .text {
+    margin-top: 18px;
+    color: white;
+    text-align: center;
+  }
+
+  .text h2 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
+  }
+
+  .text p {
+    margin: 10px 0 18px;
+    font-size: 18px;
+  }
+
+  /* BUTTONS */
+  .buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  .btn {
+    padding: 12px 40px;
+    background: hotpink;
+    color: white;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,105,180,0.7);
+    transition: transform 0.25s ease;
+  }
+
+  .btn:hover {
+    transform: scale(1.1);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- IMAGE (CHANGE FILE NAME IF NEEDED) -->
+<img src="gift.png" alt="For you">
+
+<div class="text">
+  <h2>FOR YOU 🫶🏻</h2>
+  <p>Wanna continue?</p>
+</div>
+
+<div class="buttons" id="btnArea">
+  <div class="btn" onclick="goYes()">Yes</div>
+  <div class="btn" onclick="goNo()">No</div>
+</div>
+
+<script>
+  function goYes() {
+    window.location.href = "next.html"; // next page
+  }
+
+  function goNo() {
+    // evil but cute 😌
+    document.getElementById("btnArea").innerHTML =
+      '<div class="btn" onclick="goYes()">Yes</div>' +
+      '<div class="btn" onclick="goYes()">Yes</div>';
+  }
+</script>
+
+</body>
+</html>
