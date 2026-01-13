@@ -2,102 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Things I Like About You 💖</title>
+<title>Things I Like About You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
   height:100vh;
-  background: linear-gradient(135deg,#ffe6f0,#ffd6e8);
-  font-family:'Poppins',sans-serif;
+  background:#ffdce8;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  font-family:'Playfair Display', cursive;
 }
 
 h1{
-  font-family:'Playfair Display',serif;
-  font-size:38px;
-  margin-bottom:20px;
+  margin-bottom:30px;
+  font-size:26px;
 }
 
 .slider{
   display:flex;
   align-items:center;
-  gap:30px;
-  margin-top:80px;
+  gap:40px;
 }
 
 .arrow{
-  font-size:40px;
+  font-size:30px;
   cursor:pointer;
   user-select:none;
 }
 
 .card{
-  width:240px;
-  height:320px;
-  perspective:1000px;
-}
-
-.card-inner{
-  width:100%;
-  height:100%;
-  transition:transform 0.8s;
-  transform-style:preserve-3d;
-  cursor:pointer;
-  position:relative;
-}
-
-.card.flipped .card-inner{
-  transform:rotateY(180deg);
-}
-
-.card-front,.card-back{
-  position:absolute;
-  width:100%;
-  height:100%;
-  border-radius:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-  backface-visibility:hidden;
+  width:180px;
+  height:250px;
+  background:#ff5fa2;
+  border-radius:15px;
   display:flex;
   align-items:center;
   justify-content:center;
+  color:white;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  transition:transform 0.6s;
+  cursor:pointer;
+  perspective:1000px;
+}
+
+.card.flipped{
+  transform:rotateY(180deg);
+}
+
+.card span{
+  backface-visibility:hidden;
+}
+
+.card .back{
+  position:absolute;
+  transform:rotateY(180deg);
   text-align:center;
   padding:20px;
-}
-
-.card-front{
-  background:hotpink;
-  color:white;
-  font-size:30px;
-  font-weight:bold;
-}
-
-.card-back{
-  background:white;
-  color:#3b2a1a;
-  transform:rotateY(180deg);
-  font-size:18px;
+  font-size:16px;
 }
 
 .nav{
-  margin-top:30px;
+  margin-top:60px;   /* ✅ FIXED GAP */
   display:flex;
-  gap:25px;
+  gap:30px;
 }
 
-.btn{
-  padding:12px 30px;
-  background:hotpink;
+button{
+  padding:10px 22px;
+  border:none;
+  border-radius:20px;
+  background:#ff5fa2;
   color:white;
-  border-radius:50px;
-  text-decoration:none;
-  font-size:18px;
-  box-shadow:0 0 20px rgba(255,105,180,0.5);
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+button:hover{
+  background:#ff3d91;
 }
 </style>
 </head>
@@ -107,61 +96,54 @@ h1{
 <h1>Things I Like About You 💖</h1>
 
 <div class="slider">
-  <div class="arrow" onclick="prevCard()">&#60;</div>
+  <div class="arrow" onclick="prev()">‹</div>
 
-  <div class="card" id="card">
-    <div class="card-inner">
-      <div class="card-front" id="cardNumber">ONE</div>
-      <div class="card-back" id="cardText"></div>
-    </div>
+  <div class="card" id="card" onclick="flipCard()">
+    <span class="front">ONE</span>
+    <span class="back" id="cardText"></span>
   </div>
 
-  <div class="arrow" onclick="nextCard()">&#62;</div>
+  <div class="arrow" onclick="next()">›</div>
 </div>
 
 <div class="nav">
-  <a href="intro.html" class="btn">Back</a>
-  <a href="present.html" class="btn">Next</a>
+  <button onclick="window.location.href='intro.html'">Back</button>
+  <button onclick="window.location.href='present.html'">Next</button>
 </div>
 
 <script>
 const things = [
   "Your laugh, those soft giggles 💕",
   "Jism 👅",
-  "The way you are calm in every situation",
+  "The way you stay calm in every situation",
   "Your childish behaviour",
-  "How you never get angry at me no matter what I do",
+  "How you never get angry at me",
   "Your behaviour",
   "Whole you 💋"
 ];
 
 let index = 0;
 const card = document.getElementById("card");
-const number = document.getElementById("cardNumber");
 const text = document.getElementById("cardText");
 
 function updateCard(){
   card.classList.remove("flipped");
-  number.textContent = ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN"][index];
-  text.textContent = things[index];
+  document.querySelector(".front").innerText = ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN"][index];
+  text.innerText = things[index];
 }
 
-card.addEventListener("click",()=>{
+function flipCard(){
   card.classList.toggle("flipped");
-});
-
-function nextCard(){
-  if(index < things.length-1){
-    index++;
-    updateCard();
-  }
 }
 
-function prevCard(){
-  if(index > 0){
-    index--;
-    updateCard();
-  }
+function next(){
+  index = (index + 1) % things.length;
+  updateCard();
+}
+
+function prev(){
+  index = (index - 1 + things.length) % things.length;
+  updateCard();
 }
 
 updateCard();
