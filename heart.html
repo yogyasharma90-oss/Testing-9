@@ -22,7 +22,8 @@ body{
   position:relative;
   width:260px;
   height:220px;
-  margin-bottom:30px;
+  margin-bottom:20px;
+  perspective:1000px;
 }
 
 .heart-half{
@@ -32,28 +33,30 @@ body{
   background:#ffe6eb;
   border-radius:100px 100px 0 0;
   top:0;
-  transition:transform 0.9s ease;
+  transition:transform 1s ease;
 }
 
 .left{
-  left:65px;
+  left:0;
+  transform-origin:right center;
 }
 
 .right{
-  left:65px;
+  right:0;
+  transform-origin:left center;
 }
 
-/* CARD OPEN — NO SHAPE CHANGE */
+/* FLIP OPEN (NO SHAPE CHANGE) */
 .open .left{
-  transform:translateX(-150px);
+  transform:rotateY(-160deg);
 }
 .open .right{
-  transform:translateX(150px);
+  transform:rotateY(160deg);
 }
 
 /* MESSAGE */
 #msg{
-  margin-top:10px;
+  margin:12px 0;
   font-weight:bold;
   color:hotpink;
   text-align:center;
@@ -62,7 +65,7 @@ body{
 /* PALETTE */
 #palette{
   position:absolute;
-  bottom:140px;
+  top:60%;
   background:white;
   padding:12px 18px;
   border-radius:20px;
@@ -86,8 +89,10 @@ body{
 
 /* HIDDEN RED */
 #red-wrap{
-  margin-top:60px;
+  margin-top:15px;
   text-align:center;
+  opacity:0;
+  transition:opacity 0.5s ease;
 }
 
 #red{
@@ -101,26 +106,18 @@ body{
 
 /* NEXT BUTTON */
 #nextBtn{
-  display:none;
-  margin-top:20px;
+  margin-top:10px;
   padding:12px 36px;
   background:hotpink;
   color:white;
   border-radius:30px;
   cursor:pointer;
+  display:inline-block;
 }
 </style>
 </head>
 
 <body>
-
-<!-- MOVABLE PALETTE -->
-<div id="palette">
-  <div class="color pink"></div>
-  <div class="color purple"></div>
-  <div class="color blue"></div>
-  <div class="color green"></div>
-</div>
 
 <!-- HEART -->
 <div id="heart-wrapper">
@@ -129,6 +126,14 @@ body{
 </div>
 
 <div id="msg">Color my heart 🥺</div>
+
+<!-- PALETTE -->
+<div id="palette">
+  <div class="color pink"></div>
+  <div class="color purple"></div>
+  <div class="color blue"></div>
+  <div class="color green"></div>
+</div>
 
 <!-- SECRET RED -->
 <div id="red-wrap">
@@ -139,6 +144,7 @@ body{
 <script>
 const msg = document.getElementById("msg");
 const heart = document.getElementById("heart-wrapper");
+const redWrap = document.getElementById("red-wrap");
 
 /* WRONG COLORS */
 document.querySelectorAll(".color").forEach(c=>{
@@ -152,7 +158,8 @@ document.getElementById("red").onclick = () => {
   document.querySelectorAll(".heart-half").forEach(h=>{
     h.style.background = "red";
   });
-  msg.innerText = "Good boy 😭 click it";
+
+  msg.innerHTML = "Good boy 😭<br>";
   heart.classList.add("open");
 
   const btn = document.createElement("div");
@@ -160,10 +167,9 @@ document.getElementById("red").onclick = () => {
   btn.innerText = "CLICK 💌";
   btn.onclick = () => window.location.href = "letter.html";
   msg.appendChild(btn);
-  btn.style.display = "inline-block";
 };
 
-/* DRAGGABLE PALETTE */
+/* DRAGGABLE PALETTE + REVEAL RED */
 let drag=false, dx, dy;
 const pal = document.getElementById("palette");
 
@@ -177,6 +183,9 @@ document.onmousemove = e=>{
   if(!drag) return;
   pal.style.left = e.clientX-dx+"px";
   pal.style.top = e.clientY-dy+"px";
+
+  /* Reveal red when palette moves */
+  redWrap.style.opacity = 1;
 };
 
 document.onmouseup = ()=>drag=false;
@@ -184,4 +193,3 @@ document.onmouseup = ()=>drag=false;
 
 </body>
 </html>
-  
