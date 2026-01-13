@@ -4,178 +4,165 @@
 <meta charset="UTF-8">
 <title>About Him 💖</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
-  font-family: 'Dancing Script', cursive;
+body{
+  margin:0;
+  height:100vh;
+  background:#fff0f5;
+  font-family:"Segoe UI",sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
-  gap: 30px;
+.container{
+  width:90%;
+  max-width:1100px;
+  display:flex;
+  gap:40px;
 }
 
-#textBox {
-  width: 55%;
-  font-size: 26px;
-  line-height: 1.7;
-  color: #333;
+/* TEXT */
+.text{
+  flex:1;
+  font-size:18px;
+  line-height:1.7;
+  white-space:pre-wrap;
 }
 
-#mainImg {
-  width: 40%;
+/* RIGHT IMAGE */
+.pic{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-#mainImg img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255,105,180,0.4);
+.pic img{
+  width:100%;
+  max-width:400px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(0,0,0,0.25);
 }
 
-/* POP IMAGE */
-#popupImg {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.7);
-  opacity: 0;
-  z-index: 999;
-  transition: all 0.6s ease;
+/* POPUP */
+#popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(6px);
+  z-index:10;
 }
 
-#popupImg.show {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+#popup img{
+  width:420px;
+  border-radius:20px;
+  animation:dramatic 0.8s ease;
 }
 
-#popupImg img {
-  width: 280px;
-  border-radius: 20px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+@keyframes dramatic{
+  0%{opacity:0;transform:scale(0.6);}
+  70%{opacity:1;transform:scale(1.05);}
+  100%{transform:scale(1);}
 }
 
 /* BACK BUTTON */
-#backBtn {
-  margin: 30px auto 0;
-  display: block;
-  padding: 12px 35px;
-  font-size: 20px;
-  border-radius: 30px;
-  border: none;
-  background: hotpink;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,105,180,0.6);
+#backBtn{
+  display:none;
+  margin-top:30px;
+  padding:14px 40px;
+  background:hotpink;
+  color:white;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  cursor:pointer;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div id="textBox"></div>
+  <div class="text" id="typeText"></div>
 
-  <div id="mainImg">
-    <img src="him.png" alt="him">
+  <div class="pic">
+    <img src="aboutpic.png" alt="him 💖">
   </div>
 </div>
 
-<button id="backBtn" onclick="window.location.href='intro.html'">← Back</button>
-
-<div id="popupImg">
-  <img id="popupImage" src="">
+<!-- POPUP -->
+<div id="popup">
+  <img id="popupImg" src="">
 </div>
 
-<!-- typing sound -->
-<audio id="typeSound" src="typing.mp3"></audio>
+<audio id="typeSound" src="type.mp3"></audio>
 
 <script>
-const textBox = document.getElementById("textBox");
-const sound = document.getElementById("typeSound");
+const text = `this is my boyfriend, mohit Sharma, who looks like an angry bird but is the most calm person I've ever met. 
+Looks young in this pic, but actually turned 20 today just a few mins ago actually, uff uncle.
+I get shocked thinking, IM DATING AN UNCLE!!
+But then i calm myself and then say "it's okay yogya you can do it to get his jism" so I throw that thought of out my mind and just let my mind think I love him but the truth is , I'm only here for his jism 👅 , he studies nothing, but he has hobbies, so many, like irritating me, annoying me, making me angry, he's a very chuglikhor aunty, he needs to know everything, but overall he's the most sweet, bhondu, gadha, galeech, bhangi, suar, jangli kutta, I've ever met and I'm so glad to have him in my life 💋`;
 
-const script = [
-  {
-    text: "This is my boyfriend, who looks like an angry bird but is the most calm person I've ever met. ",
-  },
-  {
-    text: "Looks young in this pic, but actually turned 20 today just a few mins ago actually, uff uncle. ",
-  },
-  {
-    text: "I get shocked thinking, ",
-    img: "shock.png"
-  },
-  {
-    text: "IM DATING AN UNCLE!! ",
-  },
-  {
-    text: "But then i calm myself and then say you can do it for his jism ",
-    img: "second.png"
-  },
-  {
-    text: "so I throw that thought out of my mind and let myself think I love him but the truth is I'm only here for his jism 👅 ",
-    img: "third.png"
-  },
-  {
-    text: "but overall he's the most sweet, bhondu, gadha, galeech, bhangi, suar, jangli kutta I've ever met and I'm so glad to have him in my life 💋",
-    img: "last.png"
-  }
+const triggers = [
+  { phrase:"I get shocked thinking", img:"shock.png" },
+  { phrase:"you can do it to get his jism", img:"second.png" },
+  { phrase:"I'm only here for his jism 👅", img:"third.png" },
+  { phrase:"I'm so glad to have him in my life 💋", img:"last.png" }
 ];
 
-let part = 0;
-let char = 0;
+const target = document.getElementById("typeText");
+const popup = document.getElementById("popup");
+const popupImg = document.getElementById("popupImg");
+const sound = document.getElementById("typeSound");
 
-function typeText() {
-  if (part >= script.length) return;
+let i=0, paused=false, used={};
 
-  const current = script[part].text;
+function type(){
+  if(paused) return;
 
-  if (char < current.length) {
-    textBox.innerHTML += current.charAt(char);
+  if(i < text.length){
+    target.textContent += text[i];
     sound.currentTime = 0;
     sound.play();
-    char++;
-    setTimeout(typeText, 80); // SLOW typing
-  } else {
-    // Text finished
+
+    triggers.forEach(t=>{
+      if(!used[t.phrase] && target.textContent.includes(t.phrase)){
+        used[t.phrase]=true;
+        paused=true;
+        sound.pause();
+        popupImg.src=t.img;
+        popup.style.display="flex";
+
+        setTimeout(()=>{
+          popup.style.display="none";
+          paused=false;
+          i++;
+          type();
+        },5000);
+      }
+    });
+
+    i++;
+    setTimeout(type,45);
+  }else{
     sound.pause();
-    char = 0;
-
-    if (script[part].img) {
-      setTimeout(() => showImage(script[part].img), 2000);
-    }
-
-    part++;
-    setTimeout(typeText, 5200);
+    const btn=document.createElement("button");
+    btn.id="backBtn";
+    btn.innerText="Back";
+    btn.onclick=()=>location.href="intro.html";
+    target.appendChild(btn);
+    btn.style.display="inline-block";
   }
 }
 
-function showImage(src) {
-  const popup = document.getElementById("popupImg");
-  const img = document.getElementById("popupImage");
-
-  img.src = src;
-  popup.classList.add("show");
-
-  setTimeout(() => {
-    popup.classList.remove("show");
-  }, 3000); // IMAGE visible for 3 sec
-}
-
-typeText();
+type();
 </script>
 
 </body>
 </html>
-
-
