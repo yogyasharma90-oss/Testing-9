@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Him 💖</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:#fff0f5;
+  font-family:"Segoe UI",sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container{
+  width:90%;
+  max-width:1100px;
+  display:flex;
+  gap:40px;
+}
+
+/* TEXT */
+.text{
+  flex:1;
+  font-size:18px;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+
+/* RIGHT IMAGE */
+.pic{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.pic img{
+  width:100%;
+  max-width:400px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(0,0,0,0.25);
+}
+
+/* POPUP */
+#popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(6px);
+  z-index:10;
+}
+
+#popup img{
+  width:420px;
+  border-radius:20px;
+  animation:dramatic 0.8s ease;
+}
+
+@keyframes dramatic{
+  0%{opacity:0;transform:scale(0.6);}
+  70%{opacity:1;transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+/* BACK BUTTON */
+#backBtn{
+  display:none;
+  margin-top:30px;
+  padding:14px 40px;
+  background:hotpink;
+  color:white;
+  border:none;
+  border-radius:40px;
+  font-size:18px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="text" id="typeText"></div>
+
+  <div class="pic">
+    <img src="aboutpic.png" alt="him 💖">
+  </div>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+  <img id="popupImg" src="">
+</div>
+
+<audio id="typeSound" src="type.mp3"></audio>
+
+<script>
+const text = `This is my boyfriend, who looks like an angry bird but is the most calm person I've ever met.
+Looks young in this pic, but actually turned 20 today just a few mins ago actually, uff uncle.
+I get shocked thinking, IM DATING AN UNCLE!!
+But then i calm myself and then say "it's okay yogya you can do it to get his jism"
+so I throw that thought out of my mind and just let my mind think I love him
+but the truth is, I'm only here for his jism 👅
+but overall he's the most sweet, bhondu, gadha, galeech, bhangi, suar, jangli kutta,
+I've ever met and I'm so glad to have him in my life 💋`;
+
+const triggers = [
+  { phrase:"I get shocked thinking", img:"shock.png" },
+  { phrase:"you can do it to get his jism", img:"second.png" },
+  { phrase:"I'm only here for his jism 👅", img:"third.png" },
+  { phrase:"I'm so glad to have him in my life 💋", img:"last.png" }
+];
+
+const target = document.getElementById("typeText");
+const popup = document.getElementById("popup");
+const popupImg = document.getElementById("popupImg");
+const sound = document.getElementById("typeSound");
+
+let i=0, paused=false, used={};
+
+function type(){
+  if(paused) return;
+
+  if(i < text.length){
+    target.textContent += text[i];
+    sound.currentTime = 0;
+    sound.play();
+
+    triggers.forEach(t=>{
+      if(!used[t.phrase] && target.textContent.includes(t.phrase)){
+        used[t.phrase]=true;
+        paused=true;
+        sound.pause();
+        popupImg.src=t.img;
+        popup.style.display="flex";
+
+        setTimeout(()=>{
+          popup.style.display="none";
+          paused=false;
+          i++;
+          type();
+        },5000);
+      }
+    });
+
+    i++;
+    setTimeout(type,45);
+  }else{
+    sound.pause();
+    const btn=document.createElement("button");
+    btn.id="backBtn";
+    btn.innerText="Back";
+    btn.onclick=()=>location.href="intro.html";
+    target.appendChild(btn);
+    btn.style.display="inline-block";
+  }
+}
+
+type();
+</script>
+
+</body>
+</html>
