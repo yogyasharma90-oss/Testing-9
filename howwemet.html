@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How We Met 💌</title>
+
+<!-- Cursive Font -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+    font-family: 'Dancing Script', cursive;
+    overflow: hidden;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+    box-sizing: border-box;
+  }
+
+  .text-box {
+    width: 55%;
+    font-size: 26px;
+    color: #4a0033;
+    line-height: 1.6;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 24px;
+    background: #4a0033;
+    animation: blink 1s infinite;
+    margin-left: 4px;
+  }
+
+  @keyframes blink {
+    0%,50%,100% { opacity: 1; }
+    25%,75% { opacity: 0; }
+  }
+
+  .image-box {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-box img {
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,105,180,0.4);
+  }
+
+  .back-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    padding: 12px 30px;
+    background: hotpink;
+    color: white;
+    border-radius: 40px;
+    font-size: 22px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 20px rgba(255,105,180,0.6);
+    transition: transform 0.2s ease;
+  }
+
+  .back-btn:hover {
+    transform: scale(1.1);
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="text-box" id="text"></div>
+
+  <div class="image-box">
+    <!-- IMAGE ON RIGHT -->
+    <img src="met.png" alt="How we met">
+  </div>
+</div>
+
+<a href="intro.html" class="back-btn">← back</a>
+
+<script>
+const text = `
+So we met through a random gc, we talked to each other normal for a while 
+and then he started flirting with me.
+
+He told me how he wants to be in relationship with me but I told him 
+NOO I DON'T WANT.
+
+Then he accepted his fate being single and then we again started talking normally.
+
+He used to daily tell me he has a HUGE CRUSH on me but I used to ignore it.
+
+One day he begged me to be his girlfriend, said 
+"I'LL DO ANYTHING JUST LET ME BE YOUR BOYFRIEND 
+AND I'LL BE YOUR JORU KA GULAM"
+
+So eventually I got tired of him saying these things again and again 
+but then I thought 
+"KOI EK TANG PE KHADA HO JAAYE TOH KYA KAR SKTE HAI"
+
+toh I said 
+"FINE I'LL ACCEPT YOUR PROPOSAL 💅🏻"
+
+aakhir ek bikhari ka bhala karne me kya bura hai, 
+so that's how we got together.
+`;
+
+let i = 0;
+const speed = 60; // SAME typing speed as before
+const textEl = document.getElementById("text");
+
+function typeText() {
+  if (i < text.length) {
+    textEl.innerHTML = text.slice(0, i) + '<span class="cursor"></span>';
+    i++;
+    setTimeout(typeText, speed);
+  } else {
+    textEl.innerHTML = text;
+  }
+}
+
+typeText();
+</script>
+
+</body>
+</html>
