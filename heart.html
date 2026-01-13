@@ -17,55 +17,85 @@ body{
   overflow:hidden;
 }
 
-/* HEART */
+/* HEART CONTAINER */
 #heart-wrapper{
   position:relative;
-  width:260px;
-  height:220px;
-  margin-bottom:20px;
+  width:200px;
+  height:180px;
+  margin-bottom:30px;
   perspective:1000px;
 }
 
-.heart-half{
+/* HEART HALVES */
+.heart{
   position:absolute;
-  width:130px;
-  height:200px;
+  width:100px;
+  height:100px;
   background:#ffe6eb;
-  border-radius:100px 100px 0 0;
-  top:0;
-  transition:transform 1s ease;
+  top:40px;
+}
+
+.heart:before,
+.heart:after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  background:#ffe6eb;
+  border-radius:50%;
 }
 
 .left{
   left:0;
   transform-origin:right center;
+  transform:rotate(-45deg);
+}
+
+.left:before{
+  top:-50px;
+  left:0;
+}
+.left:after{
+  left:50px;
+  top:0;
 }
 
 .right{
   right:0;
   transform-origin:left center;
+  transform:rotate(45deg);
 }
 
-/* FLIP OPEN (NO SHAPE CHANGE) */
+.right:before{
+  top:-50px;
+  left:0;
+}
+.right:after{
+  left:-50px;
+  top:0;
+}
+
+/* FLIP OPEN */
 .open .left{
-  transform:rotateY(-160deg);
+  transform:rotateY(-160deg) rotate(-45deg);
 }
 .open .right{
-  transform:rotateY(160deg);
+  transform:rotateY(160deg) rotate(45deg);
 }
 
 /* MESSAGE */
 #msg{
-  margin:12px 0;
+  margin-bottom:20px;
   font-weight:bold;
   color:hotpink;
-  text-align:center;
 }
 
 /* PALETTE */
 #palette{
   position:absolute;
-  top:60%;
+  top:65%;
+  left:50%;
+  transform:translateX(-50%);
   background:white;
   padding:12px 18px;
   border-radius:20px;
@@ -90,9 +120,9 @@ body{
 /* HIDDEN RED */
 #red-wrap{
   margin-top:15px;
-  text-align:center;
   opacity:0;
-  transition:opacity 0.5s ease;
+  transition:opacity 0.4s ease;
+  text-align:center;
 }
 
 #red{
@@ -100,34 +130,20 @@ body{
   height:32px;
   background:red;
   border-radius:50%;
-  margin:auto;
   cursor:pointer;
-}
-
-/* NEXT BUTTON */
-#nextBtn{
-  margin-top:10px;
-  padding:12px 36px;
-  background:hotpink;
-  color:white;
-  border-radius:30px;
-  cursor:pointer;
-  display:inline-block;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEART -->
 <div id="heart-wrapper">
-  <div class="heart-half left"></div>
-  <div class="heart-half right"></div>
+  <div class="heart left"></div>
+  <div class="heart right"></div>
 </div>
 
 <div id="msg">Color my heart 🥺</div>
 
-<!-- PALETTE -->
 <div id="palette">
   <div class="color pink"></div>
   <div class="color purple"></div>
@@ -135,61 +151,28 @@ body{
   <div class="color green"></div>
 </div>
 
-<!-- SECRET RED -->
 <div id="red-wrap">
   <div id="red"></div>
-  <div style="font-size:14px;color:red;">specially for you ❤️</div>
+  <div style="color:red;font-size:14px;">specially for you ❤️</div>
 </div>
 
 <script>
-const msg = document.getElementById("msg");
-const heart = document.getElementById("heart-wrapper");
+const palette = document.getElementById("palette");
 const redWrap = document.getElementById("red-wrap");
+const heart = document.getElementById("heart-wrapper");
+const msg = document.getElementById("msg");
 
-/* WRONG COLORS */
-document.querySelectorAll(".color").forEach(c=>{
-  c.onclick = () => {
-    msg.innerText = "nahh try again 😭";
-  };
+/* DRAGGING */
+let dragging=false, offsetX, offsetY;
+
+palette.addEventListener("mousedown", e=>{
+  dragging=true;
+  offsetX=e.clientX-palette.offsetLeft;
+  offsetY=e.clientY-palette.offsetTop;
 });
 
-/* CORRECT RED */
-document.getElementById("red").onclick = () => {
-  document.querySelectorAll(".heart-half").forEach(h=>{
-    h.style.background = "red";
-  });
-
-  msg.innerHTML = "Good boy 😭<br>";
-  heart.classList.add("open");
-
-  const btn = document.createElement("div");
-  btn.id = "nextBtn";
-  btn.innerText = "CLICK 💌";
-  btn.onclick = () => window.location.href = "letter.html";
-  msg.appendChild(btn);
-};
-
-/* DRAGGABLE PALETTE + REVEAL RED */
-let drag=false, dx, dy;
-const pal = document.getElementById("palette");
-
-pal.onmousedown = e=>{
-  drag=true;
-  dx=e.clientX-pal.offsetLeft;
-  dy=e.clientY-pal.offsetTop;
-};
-
-document.onmousemove = e=>{
-  if(!drag) return;
-  pal.style.left = e.clientX-dx+"px";
-  pal.style.top = e.clientY-dy+"px";
-
-  /* Reveal red when palette moves */
-  redWrap.style.opacity = 1;
-};
-
-document.onmouseup = ()=>drag=false;
-</script>
-
-</body>
-</html>
+document.addEventListener("mousemove", e=>{
+  if(!dragging) return;
+  palette.style.left=e.clientX-offsetX+"px";
+  palette.style.top=e.clientY-offsetY+"px";
+  palette.style.transform="none"; // IMPORTANT
