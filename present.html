@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Here Are Your Gifts 🎁</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(135deg,#ffd6e8,#ffeef5);
+  font-family: 'Poppins', sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding-top:50px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size:42px;
+  color: #3b2a1a;
+  margin-bottom:10px;
+  text-align:center;
+}
+
+.subtitle {
+  font-size:18px;
+  color:#3b2a1a;
+  margin-bottom:40px;
+  text-align:center;
+}
+
+.gift-container {
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.gift {
+  width:180px;
+  height:220px;
+  border-radius:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gift:hover {
+  transform: scale(1.08);
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+
+.gift img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.bottom-buttons {
+  margin-top:50px;
+  display:flex;
+  gap:30px;
+}
+
+.btn {
+  padding:12px 30px;
+  background:hotpink;
+  color:white;
+  border-radius:50px;
+  font-size:18px;
+  text-decoration:none;
+  box-shadow:0 0 20px rgba(255,105,180,0.5);
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<h1>Here are a few gifts for you</h1>
+<div class="subtitle">Click on each gift to open it 💝</div>
+
+<div class="gift-container">
+  <div class="gift" onclick="openGift('letter.html')">
+    <img src="letter.png" alt="Letter Gift">
+  </div>
+  <div class="gift" onclick="openGift('cake.html')">
+    <img src="cake.png" alt="Cake Gift">
+  </div>
+  <div class="gift" onclick="openGift('certificate.html')">
+    <img src="certificate.png" alt="Certificate Gift">
+  </div>
+</div>
+
+<div class="bottom-buttons">
+  <a href="intro.html" class="btn">Back</a>
+  <a href="next.html" class="btn">Next</a>
+</div>
+
+<script>
+function openGift(page){
+  window.location.href = page;
+}
+</script>
+
+</body>
+</html>
