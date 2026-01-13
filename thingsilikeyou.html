@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Things I Like About You 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#ffd6e8,#ffeef5);
+  font-family:'Poppins',sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.card-container{
+  perspective:1200px;
+}
+
+.card{
+  width:320px;
+  height:420px;
+  background:white;
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(255,105,180,0.3);
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.8s;
+  cursor:pointer;
+}
+
+.card.flip{
+  transform:rotateY(180deg);
+}
+
+.face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  box-sizing:border-box;
+}
+
+.front{
+  font-size:60px;
+  font-weight:600;
+  color:hotpink;
+}
+
+.back{
+  transform:rotateY(180deg);
+  font-size:20px;
+  color:#4a0033;
+}
+
+.nav{
+  margin-top:25px;
+  display:flex;
+  gap:30px;
+  font-size:28px;
+  cursor:pointer;
+  color:hotpink;
+}
+
+.bottom-buttons{
+  position:absolute;
+  bottom:30px;
+  display:flex;
+  gap:30px;
+}
+
+.btn{
+  padding:12px 30px;
+  background:hotpink;
+  color:white;
+  border-radius:40px;
+  text-decoration:none;
+  font-size:18px;
+  box-shadow:0 0 20px rgba(255,105,180,0.6);
+  transition:transform 0.2s;
+}
+
+.btn:hover{
+  transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card-container">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="face front" id="frontText">ONE</div>
+    <div class="face back" id="backText"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <span onclick="prevCard()">&#10094;</span>
+  <span onclick="nextCard()">&#10095;</span>
+</div>
+
+<div class="bottom-buttons">
+  <a href="intro.html" class="btn">Back</a>
+  <a href="next.html" class="btn">Next</a>
+</div>
+
+<script>
+// YOUR THINGS (RANDOM ORDER)
+let cards = [
+  "Your laugh, those soft giggles 😭",
+  "Jism 👅",
+  "The way you are calm in every situation",
+  "Your childish behaviour",
+  "How you never get angry at me no matter what I do",
+  "Your behaviour",
+  "Whole you 💋"
+];
+
+// SHUFFLE ARRAY
+cards = cards.sort(() => Math.random() - 0.5);
+
+const numbers = ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN"];
+
+let index = 0;
+let flipped = false;
+
+function updateCard(){
+  document.getElementById("frontText").innerText = numbers[index];
+  document.getElementById("backText").innerText = cards[index];
+  document.getElementById("card").classList.remove("flip");
+  flipped = false;
+}
+
+function flipCard(){
+  document.getElementById("card").classList.toggle("flip");
+  flipped = !flipped;
+}
+
+function nextCard(){
+  index = (index + 1) % cards.length;
+  updateCard();
+}
+
+function prevCard(){
+  index = (index - 1 + cards.length) % cards.length;
+  updateCard();
+}
+
+updateCard();
+</script>
+
+</body>
+</html>
