@@ -2,305 +2,234 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cake Decoration 🎂</title>
-
+<title>Decorate Your Cake 🎂</title>
 <style>
-body{
-  margin:0;
-  background:black;
-  font-family: "Segoe UI", sans-serif;
-  overflow:hidden;
-}
-
-.container{
-  width:100vw;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-
-/* Cake */
-.cake-area{
-  position:relative;
-  width:320px;
-}
-
-.cake{
-  width:100%;
-  display:block;
-}
-
-/* Toppings & candles container */
-.layer{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-}
-
-.item{
-  position:absolute;
-  transform:translate(-50%,-50%);
-}
-
-/* Flame */
-.flame{
-  width:20px;
-  position:absolute;
-  top:-22px;
-  left:50%;
-  transform:translateX(-50%);
-  display:none;
-}
-
-/* Buttons */
-.btn{
-  background:linear-gradient(135deg,#ff4fa3,#ff85c6);
-  border:none;
-  color:white;
-  padding:12px 22px;
-  border-radius:30px;
-  font-size:15px;
-  cursor:pointer;
-  margin:6px;
-}
-
-.btn.small{
-  padding:8px 14px;
-  font-size:13px;
-}
-
-.panel{
-  position:absolute;
-  right:0;
-  top:0;
-  height:100%;
-  width:240px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
-  padding:15px;
-  display:none;
-  flex-direction:column;
-}
-
-.panel h3{
-  color:white;
-  text-align:center;
-}
-
-.panel button{
-  margin:6px 0;
-}
-
-/* Bottom controls */
-.controls{
-  margin-top:20px;
-}
-
-/* Text */
-.wish{
-  position:absolute;
-  top:40px;
-  font-family:cursive;
-  font-size:34px;
-  color:white;
-  display:none;
-}
-
-/* Confetti */
-.confetti{
-  position:absolute;
-  width:8px;
-  height:12px;
-  background:red;
-  top:-20px;
-  animation:fall 2.5s linear forwards;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(720deg);
-    opacity:0;
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffe6e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-}
 
-.back-btn{
-  position:absolute;
-  bottom:20px;
-  display:none;
-}
+  #cakeArea {
+    position: relative;
+    width: 400px;
+    margin-top: 50px;
+  }
+
+  .cake {
+    width: 100%;
+    display: block;
+  }
+
+  #toppingsLayer, #candlesLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .topping, .candle {
+    position: absolute;
+  }
+
+  #panel {
+    margin-top: 20px;
+    background: #fff0f6;
+    padding: 15px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  }
+
+  .btn {
+    margin: 5px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: hotpink;
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+  }
+
+  #actionButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #ff66aa;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+  }
+
 </style>
 </head>
-
 <body>
-<div class="container">
 
-  <div class="wish">Make a wish ✨</div>
-
-  <div class="cake-area">
-    <img src="chococake.png" class="cake">
-
-    <div class="layer" id="toppingsLayer"></div>
-    <div class="layer" id="candlesLayer"></div>
-  </div>
-
-  <div class="controls">
-    <button class="btn" onclick="openMainPanel()">Decorate</button>
-    <button class="btn" id="finishBtn" style="display:none" onclick="finishDecor()">Finished Decorating</button>
-    <button class="btn" id="lightBtn" style="display:none" onclick="lightCandles()">Light the candle</button>
-    <button class="btn" id="blowBtn" style="display:none" onclick="blowCandles()">Blow the candle</button>
-  </div>
-
-  <button class="btn back-btn" id="backBtn" onclick="location.href='present.html'">Back</button>
-
-  <!-- PANEL -->
-  <div class="panel" id="panel">
-    <h3 id="panelTitle"></h3>
-    <div id="panelContent"></div>
-  </div>
-
+<div id="cakeArea">
+  <img src="chococake.png" class="cake" alt="Cake">
+  <div id="toppingsLayer"></div>
+  <div id="candlesLayer"></div>
 </div>
 
+<div id="panel">
+  <h3 id="panelTitle">Decoration Panel</h3>
+  <div id="panelContent">
+    <button class="btn" onclick="openToppings()">Toppings</button>
+    <button class="btn" onclick="openCandles()">Candles</button>
+  </div>
+</div>
+
+<button id="actionButton" onclick="confettiCelebration()">Finish & Celebrate 🎉</button>
+
 <script>
-const panel = document.getElementById("panel");
-const panelContent = document.getElementById("panelContent");
-const panelTitle = document.getElementById("panelTitle");
+const panelTitle = document.getElementById('panelTitle');
+const panelContent = document.getElementById('panelContent');
+const actionButton = document.getElementById('actionButton');
 
-function openMainPanel(){
-  panel.style.display="flex";
-  panelTitle.innerText="Decorations";
-  panelContent.innerHTML=`
-    <button class="btn small" onclick="openCandles()">Candles</button>
-    <button class="btn small" onclick="openToppings()">Toppings</button>
-  `;
-  document.getElementById("finishBtn").style.display="inline-block";
-}
-
-function backToMain(){
-  openMainPanel();
-}
-
-/* ===== TOPPINGS ===== */
+// ---------------- TOPPINGS ----------------
 function openToppings(){
   panelTitle.innerText="Toppings";
   panelContent.innerHTML=`
-    <button class="btn small" onclick="addTopping('strawberry.png')">Strawberry</button>
-    <button class="btn small" onclick="addTopping('blueberry.png')">Blueberry</button>
-    <button class="btn small" onclick="addTopping('cherry.png')">Cherry</button>
-    <button class="btn small" onclick="addTopping('oreo.png')">Oreos</button>
-    <button class="btn small" onclick="addTopping('sprinkles.png')">Sprinkles</button>
-    <button class="btn small" onclick="backToMain()">Back</button>
-    <button class="btn small" onclick="resetLayer('toppingsLayer')">Reset</button>
+    <button class="btn" onclick="addTopping('strawberry.png')">Strawberry</button>
+    <button class="btn" onclick="addTopping('blueberry.png')">Blueberry</button>
+    <button class="btn" onclick="addTopping('cherry.png')">Cherry</button>
+    <button class="btn" onclick="addTopping('oreo.png')">Oreos</button>
+    <button class="btn" onclick="addTopping('sprinkles.png')">Sprinkles</button>
+    <button class="btn" onclick="backToMain()">Back</button>
+    <button class="btn" onclick="resetLayer('toppingsLayer')">Reset</button>
   `;
 }
 
-function addTopping(img){
-  const layer = document.getElementById("toppingsLayer");
-  layer.innerHTML="";
+function addTopping(name){
+  const layer = document.getElementById('toppingsLayer');
+  const img = document.createElement('img');
+  img.src = name;
+  img.className = 'topping';
+  img.style.width = '50px';
+  // evenly spread around cake (4 corners)
   const positions = [
-    [50,12],[20,25],[80,25],[15,50],[85,50],[30,75],[70,75]
+    {top:'10%', left:'10%'},
+    {top:'10%', left:'70%'},
+    {top:'60%', left:'10%'},
+    {top:'60%', left:'70%'}
   ];
-  positions.forEach(p=>{
-    const el=document.createElement("img");
-    el.src="assets/"+img;
-    el.className="item";
-    el.style.width="40px";
-    el.style.left=p[0]+"%";
-    el.style.top=p[1]+"%";
-    layer.appendChild(el);
+  positions.forEach(pos=>{
+    const t = img.cloneNode();
+    t.style.top = pos.top;
+    t.style.left = pos.left;
+    layer.appendChild(t);
   });
 }
 
-/* ===== CANDLES ===== */
+// ---------------- CANDLES ----------------
 function openCandles(){
   panelTitle.innerText="Candles";
   panelContent.innerHTML=`
-    <button class="btn small" onclick="addCandles('simple')">Simple</button>
-    <button class="btn small" onclick="addCandles('heart')">Heart</button>
-    <button class="btn small" onclick="addCandles('age')">Age</button>
-    <button class="btn small" onclick="backToMain()">Back</button>
-    <button class="btn small" onclick="resetLayer('candlesLayer')">Reset</button>
+    <button class="btn" onclick="addCandle('candle_simple.png')">Simple Candle</button>
+    <button class="btn" onclick="addCandle('candle_heart.png')">Heart Candle</button>
+    <button class="btn" onclick="addCandle('candle_age.png')">Age Candle</button>
+    <button class="btn" onclick="backToMain()">Back</button>
+    <button class="btn" onclick="resetLayer('candlesLayer')">Reset</button>
   `;
 }
 
-function addCandles(type){
-  const layer=document.getElementById("candlesLayer");
-  layer.innerHTML="";
-
-  let data=[];
-  if(type==="age"){
-    data=[[50,18,"candle-age.png"]];
-  }else{
-    data=[
-      [30,20,`candle-${type}.png`],
-      [50,15,`candle-${type}.png`],
-      [70,20,`candle-${type}.png`]
+function addCandle(name){
+  const layer = document.getElementById('candlesLayer');
+  const img = document.createElement('img');
+  img.src = name;
+  img.className = 'candle';
+  img.style.width = '40px';
+  if(name==='candle_age.png'){
+    img.style.top='20%';
+    img.style.left='45%';
+    layer.appendChild(img);
+  } else {
+    const positions = [
+      {top:'10%', left:'10%'},
+      {top:'10%', left:'70%'}
     ];
+    positions.forEach(pos=>{
+      const c = img.cloneNode();
+      c.style.top = pos.top;
+      c.style.left = pos.left;
+      layer.appendChild(c);
+    });
   }
-
-  data.forEach(d=>{
-    const wrap=document.createElement("div");
-    wrap.className="item";
-    wrap.style.left=d[0]+"%";
-    wrap.style.top=d[1]+"%";
-
-    const img=document.createElement("img");
-    img.src="assets/"+d[2];
-    img.style.width="22px";
-
-    const flame=document.createElement("img");
-    flame.src="assets/flame.gif";
-    flame.className="flame";
-
-    wrap.appendChild(img);
-    wrap.appendChild(flame);
-    layer.appendChild(wrap);
-  });
 }
 
-/* ===== FLOW ===== */
-function finishDecor(){
-  panel.style.display="none";
-  document.getElementById("finishBtn").style.display="none";
-  document.getElementById("lightBtn").style.display="inline-block";
+// ---------------- BACK & RESET ----------------
+function backToMain(){
+  panelTitle.innerText="Decoration Panel";
+  panelContent.innerHTML=`
+    <button class="btn" onclick="openToppings()">Toppings</button>
+    <button class="btn" onclick="openCandles()">Candles</button>
+    <button class="btn" onclick="actionButton.style.display='block'">Finish Decoration</button>
+  `;
 }
 
-function lightCandles(){
-  document.querySelectorAll(".flame").forEach(f=>f.style.display="block");
-  document.querySelector(".wish").style.display="block";
-  document.getElementById("lightBtn").style.display="none";
-  document.getElementById("blowBtn").style.display="inline-block";
+function resetLayer(layerId){
+  document.getElementById(layerId).innerHTML='';
 }
 
-function blowCandles(){
-  document.querySelectorAll(".flame").forEach(f=>f.style.display="none");
-  document.querySelector(".wish").innerText="HAPPY BIRTHDAY 🎉";
-  confettiBlast();
-  document.getElementById("blowBtn").style.display="none";
-  setTimeout(()=>document.getElementById("backBtn").style.display="block",2500);
-}
-
-/* ===== UTIL ===== */
-function resetLayer(id){
-  document.getElementById(id).innerHTML="";
-}
-
-function confettiBlast(){
-  for(let i=0;i<150;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    c.style.animationDelay=Math.random()*0.3+"s";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+// ---------------- CONFETTI ----------------
+function confettiCelebration(){
+  actionButton.style.display='none';
+  const canvas = document.createElement('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.position='fixed';
+  canvas.style.top=0;
+  canvas.style.left=0;
+  canvas.style.pointerEvents='none';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  for(let i=0;i<300;i++){
+    particles.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*-canvas.height,
+      vx:(Math.random()*6)-3,
+      vy:Math.random()*5+2,
+      color: Math.random()>0.5 ? 'gold' : 'silver',
+      size: Math.random()*8+4
+    });
   }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      ctx.fillStyle=p.color;
+      ctx.fillRect(p.x,p.y,p.size,p.size);
+      p.x+=p.vx;
+      p.y+=p.vy;
+      if(p.y>canvas.height)p.y=-10;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+  // Show back button after 3 sec
+  setTimeout(()=>{
+    const backBtn = document.createElement('button');
+    backBtn.className='btn';
+    backBtn.innerText='Back';
+    backBtn.onclick=()=>window.location.href='present.html';
+    backBtn.style.marginTop='20px';
+    document.body.appendChild(backBtn);
+  },3000);
 }
 </script>
+
 </body>
 </html>
