@@ -18,7 +18,8 @@ h1{margin:15px 0}
   position:relative;
   width:300px;
   margin:30px auto;
-  display: inline-block;
+  display:flex;
+  justify-content:center;
 }
 
 .cake{
@@ -171,8 +172,8 @@ function addTopping(img){
 
   const rect = toppingsLayer.getBoundingClientRect();
 
-  t.style.left = Math.random() * (rect.width - 40) + "px";
-  t.style.top = Math.random() * (rect.height - 40) + "px";
+  t.style.left = (40 + Math.random()*140) + "px";
+  t.style.top = (60 + Math.random()*60) + "px";
 
   toppingsLayer.appendChild(t);
 }
