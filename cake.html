@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cake Gift 🎂</title>
+
+<style>
+body{
+  margin:0;
+  background:#fff7fb;
+  font-family:'Poppins', sans-serif;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* 🎈 Balloons */
+.balloon{
+  position:absolute;
+  top:-40px;
+  width:50px;
+  height:70px;
+  background:pink;
+  border-radius:50%;
+}
+.balloon::after{
+  content:"";
+  position:absolute;
+  bottom:-20px;
+  left:50%;
+  width:2px;
+  height:20px;
+  background:#aaa;
+}
+#balloons{
+  display:flex;
+  gap:40px;
+  left:50%;
+  transform:translateX(-50%);
+  position:absolute;
+}
+
+/* 🎂 Cake */
+#cake{
+  position:absolute;
+  top:35%;
+  left:50%;
+  transform:translateX(-50%);
+}
+.tier{
+  background:white;
+  border-radius:10px;
+  margin:5px auto;
+}
+.tier1{width:220px;height:65px;}
+.tier2{width:180px;height:60px;}
+.tier3{width:140px;height:55px;}
+
+#candles{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+/* 🎨 Panel */
+#panel{
+  position:absolute;
+  right:-340px;
+  top:0;
+  width:340px;
+  height:100%;
+  background:white;
+  box-shadow:-5px 0 15px rgba(0,0,0,.2);
+  padding:20px;
+  transition:.4s;
+}
+#panel.show{right:0}
+
+button{
+  padding:10px 18px;
+  margin:6px;
+  border:none;
+  border-radius:20px;
+  background:#ff5fa2;
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+}
+button.small{
+  background:#ddd;
+  color:#333;
+}
+
+.option{
+  display:inline-block;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  margin:6px;
+  cursor:pointer;
+}
+
+/* ✨ Confetti */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:12px;
+  animation:fall 3s linear infinite;
+}
+@keyframes fall{
+  from{top:-20px;}
+  to{top:100vh;}
+}
+
+/* 🎉 Birthday Text */
+#birthdayText{
+  display:none;
+  position:absolute;
+  top:15%;
+  width:100%;
+  font-size:48px;
+  font-weight:800;
+  color:#ff3b8d;
+  letter-spacing:2px;
+}
+
+#backBtn{
+  display:none;
+  position:absolute;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+}
+</style>
+</head>
+
+<body>
+
+<div id="birthdayText">HAPPY BIRTHDAY 🎉</div>
+
+<!-- 🎈 Balloons -->
+<div id="balloons">
+  <div class="balloon"></div>
+  <div class="balloon"></div>
+  <div class="balloon"></div>
+</div>
+
+<!-- 🎂 Cake -->
+<div id="cake">
+  <div id="candles"></div>
+  <div class="tier tier3"></div>
+  <div class="tier tier2"></div>
+  <div class="tier tier1"></div>
+</div>
+
+<!-- Controls -->
+<div style="position:absolute;bottom:90px;left:50%;transform:translateX(-50%);">
+  <button onclick="openPanel()">Decorate</button>
+  <button onclick="finishDecorating()">Finished Decorating</button>
+</div>
+
+<!-- Back -->
+<div id="backBtn">
+  <button onclick="window.location.href='present.html'">← Back</button>
+</div>
+
+<!-- 🎨 Panel -->
+<div id="panel">
+  <h3 id="panelTitle">Decorate</h3>
+  <div id="panelContent"></div>
+</div>
+
+<script>
+const panel = document.getElementById("panel");
+const content = document.getElementById("panelContent");
+const tiers = document.querySelectorAll(".tier");
+const candlesDiv = document.getElementById("candles");
+const birthdayText = document.getElementById("birthdayText");
+const backBtn = document.getElementById("backBtn");
+
+/* Panel */
+function openPanel(){
+  panel.classList.add("show");
+  mainMenu();
+}
+function closePanel(){
+  panel.classList.remove("show");
+}
+function mainMenu(){
+  panelTitle.innerText="Decorate Cake";
+  content.innerHTML=`
+    <button onclick="colorMenu()">Colour</button>
+    <button onclick="toppingMenu()">Toppings</button>
+    <button onclick="candleMenu()">Candles</button>
+    <button class="small" onclick="closePanel()">Close</button>
+  `;
+}
+
+/* 🎨 Colour */
+function colorMenu(){
+  panelTitle.innerText="Cake Colour";
+  content.innerHTML=`
+    <div class="option" style="background:white" onclick="setColor('white')"></div>
+    <div class="option" style="background:pink" onclick="setColor('pink')"></div>
+    <div class="option" style="background:lavender" onclick="setColor('lavender')"></div>
+    <div class="option" style="background:peachpuff" onclick="setColor('peachpuff')"></div>
+    <br><button class="small" onclick="mainMenu()">← Back</button>
+  `;
+}
+function setColor(c){
+  tiers.forEach(t=>t.style.background=c);
+}
+
+/* 🍓 Toppings */
+function toppingMenu(){
+  panelTitle.innerText="Toppings";
+  content.innerHTML=`
+    <button onclick="addTopping('🍓')">Strawberry</button>
+    <button onclick="addTopping('🍒')">Cherry</button>
+    <button onclick="addTopping('🍫')">Chocolate</button>
+    <br><button class="small" onclick="mainMenu()">← Back</button>
+  `;
+}
+function addTopping(e){
+  tiers[0].innerHTML += `<span style="font-size:20px">${e}</span>`;
+}
+
+/* 🕯️ Candles */
+function candleMenu(){
+  panelTitle.innerText="Candles";
+  content.innerHTML=`
+    <button onclick="addCandle('🕯️')">Classic</button>
+    <button onclick="addCandle('❤️')">Heart</button>
+    <button onclick="addCandle('⭐')">Star</button>
+    <br><button class="small" onclick="mainMenu()">← Back</button>
+  `;
+}
+function addCandle(c){
+  candlesDiv.innerHTML += `<span style="font-size:24px">${c}</span>`;
+}
+
+/* 🎉 Final Animation */
+function finishDecorating(){
+  closePanel();
+  setTimeout(()=>alert("Light the candle 🕯️"),600);
+  setTimeout(()=>alert("Make a wish ✨"),1600);
+  setTimeout(blowCandles,2600);
+}
+
+function blowCandles(){
+  candlesDiv.innerHTML="";
+  popBalloons();
+  confettiRain();
+  setTimeout(showBirthday,1500);
+}
+
+function popBalloons(){
+  document.querySelectorAll(".balloon").forEach(b=>b.style.display="none");
+}
+
+function confettiRain(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+function showBirthday(){
+  birthdayText.style.display="block";
+  backBtn.style.display="block";
+}
+</script>
+
+</body>
+</html>
