@@ -3,35 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <title>Decorate Your Cake 🎂</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  margin:0;
+  background:#ffe6ea;
+  font-family:Segoe UI, sans-serif;
+  text-align:center;
+}
+
+h1{margin:15px 0}
+
+.cake-area{
+  position:relative;
+  width:300px;
+  margin:30px auto;
+}
+
+.cake{
+  width:100%;
+}
+
+.layer{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+.topping{
+  width:35px;
+  position:absolute;
+}
+
+.candle{
+  width:35px;
+  position:absolute;
+  bottom:70%;
+}
+
+.flame{
+  width:12px;
+  height:20px;
+  background:radial-gradient(circle, yellow, orange, red);
+  border-radius:50% 50% 50% 50%;
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  animation:flicker 0.15s infinite;
+}
+
+@keyframes flicker{
+  0%{transform:translateX(-50%) scale(1)}
+  50%{transform:translateX(-50%) scale(1.1)}
+  100%{transform:translateX(-50%) scale(1)}
+}
+
+.panel{
+  width:90%;
+  max-width:350px;
+  margin:20px auto;
+  background:#fff0f5;
+  padding:15px;
+  border-radius:12px;
+}
+
+.btn{
+  background:#ff6fae;
+  border:none;
+  color:white;
+  padding:8px 14px;
+  border-radius:8px;
+  margin:5px;
+  cursor:pointer;
+}
+
+.small{font-size:14px}
+
+#lightBtn{display:none}
+
+.confetti{
+  position:fixed;
+  width:8px;
+  height:8px;
+  top:-10px;
+  animation:fall 2s linear forwards;
+}
+
+@keyframes fall{
+  to{transform:translateY(100vh) rotate(360deg)}
+}
+</style>
 </head>
+
 <body>
 
-<h2>Decorate Your Cake 🎂</h2>
+<h1>Decorate Your Cake 🎂</h1>
 
-<div class="cake-wrapper">
-  <img src="images/cake.png" class="cake-base">
+<div class="cake-area">
+  <img src="chococake.png" class="cake">
 
-  <!-- toppings -->
-  <div id="toppings"></div>
+  <div id="toppingsLayer" class="layer"></div>
+  <div id="candlesLayer" class="layer"></div>
+</div>
 
-  <!-- candle -->
-  <div id="candle-area">
-    <img id="candle" src="images/candle.png">
-    <div id="flame"></div>
+<div class="panel">
+  <h3 id="panelTitle">Decorations</h3>
+  <div id="panelContent">
+    <button class="btn" onclick="openToppings()">Toppings</button>
+    <button class="btn" onclick="openCandles()">Candles</button>
   </div>
+
+  <button class="btn" id="lightBtn" onclick="lightCandles()">Light Candles 🔥</button>
 </div>
 
-<div class="controls">
-  <button onclick="addTopping('strawberry')">Strawberry</button>
-  <button onclick="addTopping('blueberry')">Blueberry</button>
-  <button onclick="addTopping('cherry')">Cherry</button>
-  <button onclick="addTopping('oreo')">Oreos</button>
-  <button onclick="addCandle()">Add Candle</button>
-  <button onclick="lightCandle()">Light Candle 🔥</button>
-  <button onclick="resetCake()">Reset</button>
-</div>
+<script>
+const panelTitle=document.getElementById("panelTitle");
+const panelContent=document.getElementById("panelContent");
+const toppingsLayer=document.getElementById("toppingsLayer");
+const candlesLayer=document.getElementById("candlesLayer");
+const lightBtn=document.getElementById("lightBtn");
 
-<script src="script.js"></script>
+function openToppings(){
+  panelTitle.innerText="Toppings";
+  panelContent.innerHTML=`
+    <button class="btn small" onclick="addTopping('strawberry.png')">Strawberry</button>
+    <button class="btn small" onclick="addTopping('blueberry.png')">Blueberry</button>
+    <button class="btn small" onclick="addTopping('cherry.png')">Cherry</button>
+    <button class="btn small" onclick="addTopping('oreo.png')">Oreos</button>
+    <button class="btn small" onclick="addTopping('sprinkles.png')">Sprinkles</button><br>
+    <button class="btn small" onclick="backToMain()">Back</button>
+    <button class="btn small" onclick="resetLayer(toppingsLayer)">Reset</button>
+  `;
+}
+
+function openCandles(){
+  panelTitle.innerText="Candles";
+  panelContent.innerHTML=`
+    <button class="btn small" onclick="addCandle('simple-candle.png')">Simple</button>
+    <button class="btn small" onclick="addCandle('heart-candle.png')">Heart</button>
+    <button class="btn small" onclick="addCandle('age-candle.png')">Age</button><br>
+    <button class="btn small" onclick="backToMain()">Back</button>
+    <button class="btn small" onclick="resetLayer(candlesLayer)">Reset</button>
+  `;
+}
+
+function backToMain(){
+  panelTitle.innerText="Decorations";
+  panelContent.innerHTML=`
+    <button class="btn" onclick="openToppings()">Toppings</button>
+    <button class="btn" onclick="openCandles()">Candles</button>
+  `;
+  lightBtn.style.display="block";
+}
+
+function resetLayer(layer){
+  layer.innerHTML="";
+}
+
+function addTopping(img){
+  const t=document.createElement("img");
+  t.src=img;
+  t.className="topping";
+  t.style.left=Math.random()*220+"px";
+  t.style.top=Math.random()*120+"px";
+  toppingsLayer.appendChild(t);
+}
+
+function addCandle(img){
+  const c=document.createElement("img");
+  c.src=img;
+  c.className="candle";
+  c.style.left=(candlesLayer.children.length*60+80)+"px";
+  candlesLayer.appendChild(c);
+}
+
+function lightCandles(){
+  document.querySelectorAll(".candle").forEach(c=>{
+    if(!c.querySelector(".flame")){
+      const f=document.createElement("div");
+      f.className="flame";
+      c.appendChild(f);
+    }
+  });
+  makeConfetti();
+}
+
+function makeConfetti(){
+  for(let i=0;i<80;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2000);
+  }
+}
+</script>
+
 </body>
 </html>
