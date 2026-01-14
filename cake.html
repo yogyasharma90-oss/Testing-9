@@ -2,361 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cake 🎂</title>
+<title>Cake Decoration 🎂</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+body{
+  margin:0;
+  background:black;
+  font-family: "Segoe UI", sans-serif;
+  overflow:hidden;
+}
 
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    background: linear-gradient(to bottom, #ffe6e6, #fff5e6);
-  }
+.container{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
 
-  /* Cake */
-  #cake {
-    position: relative;
-    width: 300px;
-    margin: 80px auto 0;
-    z-index: 1;
-  }
-  .tier {
-    width: 300px;
-    height: 80px;
-    background: #fff; /* default cream */
-    border-radius: 20px;
-    margin-bottom: -20px;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: background 0.3s;
-  }
+/* Cake */
+.cake-area{
+  position:relative;
+  width:320px;
+}
 
-  /* Candles */
-  .candle {
-    position: absolute;
-    width: 40px;
-    height: 80px;
-    bottom: 100%;
-    cursor: pointer;
-    z-index: 5;
-  }
-  .flame {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    width: 15px;
-    height: 25px;
-    margin-left: -7.5px;
-    background: radial-gradient(circle, #fffa90, #ff6b00);
-    border-radius: 50%;
-    filter: blur(1px);
-    animation: flicker 0.3s infinite;
-    display: none;
-    z-index: 10;
-  }
-  @keyframes flicker {
-    0% { transform: scale(1,1); opacity:1; }
-    50% { transform: scale(1.1,0.9); opacity:0.9; }
-    100% { transform: scale(1,1); opacity:1; }
-  }
+.cake{
+  width:100%;
+  display:block;
+}
 
-  /* Decorations panel */
-  #decorPanel {
-    position: absolute;
-    right: 20px;
-    top: 100px;
-    width: 160px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 15px;
-    padding: 10px;
-    z-index: 20;
-  }
-  .panel-btn {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    background: hotpink;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-  }
+/* Toppings & candles container */
+.layer{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
 
-  /* Panel sections */
-  .section {
-    display: none;
-    margin-top: 10px;
-  }
-  .backBtn {
-    background: #999;
-  }
+.item{
+  position:absolute;
+  transform:translate(-50%,-50%);
+}
 
-  /* Buttons below cake */
-  #actionBtn {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 40px;
-    font-size: 20px;
-    background: hotpink;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    z-index: 50;
-  }
+/* Flame */
+.flame{
+  width:20px;
+  position:absolute;
+  top:-22px;
+  left:50%;
+  transform:translateX(-50%);
+  display:none;
+}
 
-  /* Make a wish text */
-  #wishText {
-    position: absolute;
-    top: 40px;
-    width: 100%;
-    text-align: center;
-    font-size: 40px;
-    font-family: 'Great Vibes', cursive;
-    color: #ff69b4;
-    display: none;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    z-index: 50;
-  }
+/* Buttons */
+.btn{
+  background:linear-gradient(135deg,#ff4fa3,#ff85c6);
+  border:none;
+  color:white;
+  padding:12px 22px;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+  margin:6px;
+}
 
-  /* Balloons */
-  .balloon {
-    position: absolute;
-    width: 80px;
-    height: 120px;
-    top: -150px;
-    cursor: pointer;
-    z-index: 10;
-  }
+.btn.small{
+  padding:8px 14px;
+  font-size:13px;
+}
 
-  /* Confetti canvas */
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 100;
-  }
+.panel{
+  position:absolute;
+  right:0;
+  top:0;
+  height:100%;
+  width:240px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  padding:15px;
+  display:none;
+  flex-direction:column;
+}
 
+.panel h3{
+  color:white;
+  text-align:center;
+}
+
+.panel button{
+  margin:6px 0;
+}
+
+/* Bottom controls */
+.controls{
+  margin-top:20px;
+}
+
+/* Text */
+.wish{
+  position:absolute;
+  top:40px;
+  font-family:cursive;
+  font-size:34px;
+  color:white;
+  display:none;
+}
+
+/* Confetti */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:12px;
+  background:red;
+  top:-20px;
+  animation:fall 2.5s linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+.back-btn{
+  position:absolute;
+  bottom:20px;
+  display:none;
+}
 </style>
 </head>
+
 <body>
+<div class="container">
 
-<div id="cake">
-  <div class="tier" id="bottomTier"></div>
-  <div class="tier" id="middleTier"></div>
-  <div class="tier" id="topTier"></div>
+  <div class="wish">Make a wish ✨</div>
+
+  <div class="cake-area">
+    <img src="assets/chococake.png" class="cake">
+
+    <div class="layer" id="toppingsLayer"></div>
+    <div class="layer" id="candlesLayer"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="openMainPanel()">Decorate</button>
+    <button class="btn" id="finishBtn" style="display:none" onclick="finishDecor()">Finished Decorating</button>
+    <button class="btn" id="lightBtn" style="display:none" onclick="lightCandles()">Light the candle</button>
+    <button class="btn" id="blowBtn" style="display:none" onclick="blowCandles()">Blow the candle</button>
+  </div>
+
+  <button class="btn back-btn" id="backBtn" onclick="location.href='present.html'">Back</button>
+
+  <!-- PANEL -->
+  <div class="panel" id="panel">
+    <h3 id="panelTitle"></h3>
+    <div id="panelContent"></div>
+  </div>
+
 </div>
-
-<!-- Candles -->
-<img src="candle_heart.png" class="candle" id="candleHeart">
-<div class="flame" id="flameHeart"></div>
-<img src="candle_normal.png" class="candle" id="candleNormal">
-<div class="flame" id="flameNormal"></div>
-<img src="candle_age.png" class="candle" id="candleAge">
-<div class="flame" id="flameAge"></div>
-
-<!-- Balloons -->
-<img src="balloon1.png" class="balloon" id="balloon1">
-<img src="balloon2.png" class="balloon" id="balloon2">
-<img src="balloon3.png" class="balloon" id="balloon3">
-
-<!-- Decoration Panel -->
-<div id="decorPanel">
-  <button class="panel-btn" id="colorBtn">Color</button>
-  <div class="section" id="colorSection">
-    <button class="panel-btn colorChoice" data-color="#fff">White</button>
-    <button class="panel-btn colorChoice" data-color="#a0522d">Brown</button>
-    <button class="panel-btn colorChoice" data-color="#ffc0cb">Pink</button>
-    <button class="panel-btn colorChoice" data-color="#fffacd">Pastel Yellow</button>
-    <button class="panel-btn backBtn">Back</button>
-  </div>
-  <button class="panel-btn" id="toppingsBtn">Toppings</button>
-  <div class="section" id="toppingSection">
-    <button class="panel-btn toppingChoice" data-img="strawberry.png">Strawberry</button>
-    <button class="panel-btn toppingChoice" data-img="blueberry.png">Blueberry</button>
-    <button class="panel-btn toppingChoice" data-img="cherry.png">Cherry</button>
-    <button class="panel-btn toppingChoice" data-img="chocolate.png">Chocolate</button>
-    <button class="panel-btn toppingChoice" data-img="sprinkle.png">Sprinkles</button>
-    <button class="panel-btn toppingChoice" data-img="oreo.png">Oreo</button>
-    <button class="panel-btn backBtn">Back</button>
-  </div>
-  <button class="panel-btn" id="candleBtn">Candles</button>
-  <div class="section" id="candleSection">
-    <button class="panel-btn candleChoice" data-candle="candle_heart.png">Heart</button>
-    <button class="panel-btn candleChoice" data-candle="candle_normal.png">Normal</button>
-    <button class="panel-btn candleChoice" data-candle="candle_age.png">Age</button>
-    <button class="panel-btn backBtn">Back</button>
-  </div>
-  <button class="panel-btn" id="finishBtn">Finished Decorating</button>
-</div>
-
-<div id="wishText">Make a Wish</div>
-<button id="actionBtn">Light the Candles</button>
-
-<canvas id="confetti"></canvas>
 
 <script>
-  // ==== Decoration Panel Logic ====
-  const colorBtn = document.getElementById("colorBtn");
-  const toppingsBtn = document.getElementById("toppingsBtn");
-  const candleBtn = document.getElementById("candleBtn");
-  const finishBtn = document.getElementById("finishBtn");
-  const actionBtn = document.getElementById("actionBtn");
-  const wishText = document.getElementById("wishText");
+const panel = document.getElementById("panel");
+const panelContent = document.getElementById("panelContent");
+const panelTitle = document.getElementById("panelTitle");
 
-  const colorSection = document.getElementById("colorSection");
-  const toppingSection = document.getElementById("toppingSection");
-  const candleSection = document.getElementById("candleSection");
+function openMainPanel(){
+  panel.style.display="flex";
+  panelTitle.innerText="Decorations";
+  panelContent.innerHTML=`
+    <button class="btn small" onclick="openCandles()">Candles</button>
+    <button class="btn small" onclick="openToppings()">Toppings</button>
+  `;
+  document.getElementById("finishBtn").style.display="inline-block";
+}
 
-  const tiers = [document.getElementById("bottomTier"), document.getElementById("middleTier"), document.getElementById("topTier")];
+function backToMain(){
+  openMainPanel();
+}
 
-  const candleHeart = document.getElementById("candleHeart");
-  const candleNormal = document.getElementById("candleNormal");
-  const candleAge = document.getElementById("candleAge");
+/* ===== TOPPINGS ===== */
+function openToppings(){
+  panelTitle.innerText="Toppings";
+  panelContent.innerHTML=`
+    <button class="btn small" onclick="addTopping('strawberry.png')">Strawberry</button>
+    <button class="btn small" onclick="addTopping('blueberry.png')">Blueberry</button>
+    <button class="btn small" onclick="addTopping('cherry.png')">Cherry</button>
+    <button class="btn small" onclick="addTopping('oreo.png')">Oreos</button>
+    <button class="btn small" onclick="addTopping('sprinkles.png')">Sprinkles</button>
+    <button class="btn small" onclick="backToMain()">Back</button>
+    <button class="btn small" onclick="resetLayer('toppingsLayer')">Reset</button>
+  `;
+}
 
-  const flameHeart = document.getElementById("flameHeart");
-  const flameNormal = document.getElementById("flameNormal");
-  const flameAge = document.getElementById("flameAge");
-
-  const balloons = [
-    document.getElementById("balloon1"),
-    document.getElementById("balloon2"),
-    document.getElementById("balloon3")
+function addTopping(img){
+  const layer = document.getElementById("toppingsLayer");
+  layer.innerHTML="";
+  const positions = [
+    [50,12],[20,25],[80,25],[15,50],[85,50],[30,75],[70,75]
   ];
-
-  let selectedToppings = [];
-  let selectedCandles = ["candle_heart.png","candle_normal.png","candle_age.png"];
-
-  // === Panel toggle logic ===
-  colorBtn.onclick = ()=>{colorSection.style.display="block"; toppingSection.style.display="none"; candleSection.style.display="none";}
-  toppingsBtn.onclick = ()=>{toppingSection.style.display="block"; colorSection.style.display="none"; candleSection.style.display="none";}
-  candleBtn.onclick = ()=>{candleSection.style.display="block"; colorSection.style.display="none"; toppingSection.style.display="none";}
-
-  document.querySelectorAll(".backBtn").forEach(b=>{
-    b.onclick=()=>{colorSection.style.display="none"; toppingSection.style.display="none"; candleSection.style.display="none";}
+  positions.forEach(p=>{
+    const el=document.createElement("img");
+    el.src="assets/"+img;
+    el.className="item";
+    el.style.width="40px";
+    el.style.left=p[0]+"%";
+    el.style.top=p[1]+"%";
+    layer.appendChild(el);
   });
+}
 
-  document.querySelectorAll(".colorChoice").forEach(c=>{
-    c.onclick=()=>{tiers.forEach(t=>t.style.background=c.dataset.color);}
+/* ===== CANDLES ===== */
+function openCandles(){
+  panelTitle.innerText="Candles";
+  panelContent.innerHTML=`
+    <button class="btn small" onclick="addCandles('simple')">Simple</button>
+    <button class="btn small" onclick="addCandles('heart')">Heart</button>
+    <button class="btn small" onclick="addCandles('age')">Age</button>
+    <button class="btn small" onclick="backToMain()">Back</button>
+    <button class="btn small" onclick="resetLayer('candlesLayer')">Reset</button>
+  `;
+}
+
+function addCandles(type){
+  const layer=document.getElementById("candlesLayer");
+  layer.innerHTML="";
+
+  let data=[];
+  if(type==="age"){
+    data=[[50,18,"candle-age.png"]];
+  }else{
+    data=[
+      [30,20,`candle-${type}.png`],
+      [50,15,`candle-${type}.png`],
+      [70,20,`candle-${type}.png`]
+    ];
+  }
+
+  data.forEach(d=>{
+    const wrap=document.createElement("div");
+    wrap.className="item";
+    wrap.style.left=d[0]+"%";
+    wrap.style.top=d[1]+"%";
+
+    const img=document.createElement("img");
+    img.src="assets/"+d[2];
+    img.style.width="22px";
+
+    const flame=document.createElement("img");
+    flame.src="assets/flame.gif";
+    flame.className="flame";
+
+    wrap.appendChild(img);
+    wrap.appendChild(flame);
+    layer.appendChild(wrap);
   });
+}
 
-  document.querySelectorAll(".toppingChoice").forEach(t=>{
-    t.onclick=()=>{
-      const img = document.createElement("img");
-      img.src=t.dataset.img;
-      img.style.position="absolute";
-      img.style.width="40px";
-      img.style.height="40px";
-      img.style.top=Math.random()*60+"px";
-      img.style.left=Math.random()*220+"px";
-      img.style.zIndex=5;
-      tiers[0].appendChild(img);
-    }
-  });
+/* ===== FLOW ===== */
+function finishDecor(){
+  panel.style.display="none";
+  document.getElementById("finishBtn").style.display="none";
+  document.getElementById("lightBtn").style.display="inline-block";
+}
 
-  // Finished decorating
-  finishBtn.onclick = ()=>{
-    document.getElementById("decorPanel").style.display="none";
-    actionBtn.style.display="inline-block";
-  };
+function lightCandles(){
+  document.querySelectorAll(".flame").forEach(f=>f.style.display="block");
+  document.querySelector(".wish").style.display="block";
+  document.getElementById("lightBtn").style.display="none";
+  document.getElementById("blowBtn").style.display="inline-block";
+}
 
-  // Place candles evenly
-  candleHeart.style.left="50px"; candleHeart.style.bottom="80px";
-  candleNormal.style.left="120px"; candleNormal.style.bottom="80px";
-  candleAge.style.left="200px"; candleAge.style.bottom="80px";
+function blowCandles(){
+  document.querySelectorAll(".flame").forEach(f=>f.style.display="none");
+  document.querySelector(".wish").innerText="HAPPY BIRTHDAY 🎉";
+  confettiBlast();
+  document.getElementById("blowBtn").style.display="none";
+  setTimeout(()=>document.getElementById("backBtn").style.display="block",2500);
+}
 
-  // Action Button logic
-  let stage=0; // 0=light candles, 1=blow candles, 2=done
-  actionBtn.onclick = ()=>{
-    if(stage===0){
-      // Light candles
-      flameHeart.style.display="block";
-      flameNormal.style.display="block";
-      flameAge.style.display="block";
-      wishText.style.display="block";
-      actionBtn.textContent="Blow the Candle";
-      stage=1;
-    } else if(stage===1){
-      // Blow candles, pop balloons, confetti
-      flameHeart.style.display="none";
-      flameNormal.style.display="none";
-      flameAge.style.display="none";
-      wishText.style.display="none";
-      actionBtn.style.display="none";
-      popBalloons();
-    }
-  };
+/* ===== UTIL ===== */
+function resetLayer(id){
+  document.getElementById(id).innerHTML="";
+}
 
-  // ==== Confetti Logic ====
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  let particles = [];
-
-  function createConfetti(x, y){
-    for(let i=0;i<100;i++){
-      particles.push({
-        x, y,
-        vx:(Math.random()*12-6),
-        vy:(Math.random()*-10-2),
-        w:Math.random()*8+4,
-        h:Math.random()*4+2,
-        r:Math.random()*360,
-        rs:Math.random()*8-4,
-        c:Math.random()>0.5?"rgba(212,175,55,0.95)":"rgba(220,220,220,0.95)",
-        life:200
-      });
-    }
-    animateConfetti();
+function confettiBlast(){
+  for(let i=0;i<150;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDelay=Math.random()*0.3+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
   }
-
-  function animateConfetti(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach((p,i)=>{
-      ctx.save();
-      ctx.translate(p.x,p.y);
-      ctx.rotate(p.r*Math.PI/180);
-      ctx.fillStyle=p.c;
-      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
-      ctx.restore();
-      p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.r+=p.rs; p.life--;
-      if(p.life<=0) particles.splice(i,1);
-    });
-    if(particles.length>0) requestAnimationFrame(animateConfetti);
-    else showBackButton();
-  }
-
-  function popBalloons(){
-    balloons.forEach((b,i)=>{
-      b.style.transition="all 0.6s ease";
-      b.style.transform="scale(0)";
-      b.style.opacity=0;
-      setTimeout(()=>{createConfetti(b.offsetLeft+40,b.offsetTop+60)},600);
-    });
-  }
-
-  function showBackButton(){
-    const backBtn = document.createElement("button");
-    backBtn.textContent="Back";
-    backBtn.style.position="absolute";
-    backBtn.style.bottom="40px";
-    backBtn.style.left="50%";
-    backBtn.style.transform="translateX(-50%)";
-    backBtn.style.padding="12px 40px";
-    backBtn.style.fontSize="20px";
-    backBtn.style.background="hotpink";
-    backBtn.style.color="white";
-    backBtn.style.border="none";
-    backBtn.style.borderRadius="50px";
-    backBtn.style.cursor="pointer";
-    backBtn.onclick=()=>{window.location.href="present.html"};
-    document.body.appendChild(backBtn);
-  }
-
+}
 </script>
 </body>
 </html>
