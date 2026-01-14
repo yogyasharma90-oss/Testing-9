@@ -1,182 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Things I Like About You ðŸ’–</title>
+  <meta charset="UTF-8" />
+  <title>Things I Like About You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <!-- Cursive font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-<style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:#ffe4ef;
-  font-family:'Playfair Display', cursive;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffe6f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Pacifico', cursive;
+      text-align: center;
+    }
 
-h1{
-  margin-bottom:30px;
-}
+    h1 {
+      margin-bottom: 20px;
+      color: #000;
+      font-weight: normal;
+    }
 
-.scene{
-  width:260px;
-  height:360px;
-  perspective:1000px;
-  position:relative;
--webkit-transform: translateZ(0);
+    /* CARD AREA */
+    .card-wrapper {
+      position: relative;
+      width: 220px;
+      height: 300px;
+      perspective: 1000px;
+    }
 
-}
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      cursor: pointer;
+    }
 
-.card{
-  width:100%;
-  height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform 0.8s;
-  cursor:pointer;
--webkit-transform-style: preserve-3d;
--webkit-transition: transform 0.8s;
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
 
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      background: #ff4fa3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      color: white;
+      font-size: 20px;
+    }
 
-}
+    .card-front {
+      font-size: 28px;
+    }
 
-.card.is-flipped{
-  transform:rotateY(180deg);
--webkit-transform: rotateY(180deg);
+    .card-back {
+      transform: rotateY(180deg);
+      font-size: 18px;
+      line-height: 1.4;
+    }
 
-}
+    /* ARROWS */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      cursor: pointer;
+      color: #ff4fa3;
+      user-select: none;
+    }
 
-.card-face{
-  position:absolute;
-  width:100%;
-  height:100%;
-  backface-visibility:hidden;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.2);
-  text-align:center;
+    .arrow.left {
+      left: -40px;
+    }
 
--webkit-backface-visibility: hidden;
-}
+    .arrow.right {
+      right: -40px;
+    }
 
-.front{
-  background:#ff5fa2;
-  color:white;
-  font-size:28px;
-  font-weight:bold;
-}
+    /* BOTTOM BUTTONS — untouched */
+    .bottom-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
 
-.back{
-  background:white;
-  color:#ff5fa2;
-  transform:rotateY(180deg);
--webkit-transform: rotateY(180deg);
-
-  font-size:18px;
-
-}
-
-.arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:30px;
-  cursor:pointer;
-  user-select:none;
-}
-
-.left{
-  left:-50px;
-}
-
-.right{
-  right:-50px;
-}
-
-.controls{
-  margin-top:80px;
-  display:flex;
-  gap:16px;
-}
-
-
-button{
-  padding:10px 22px;
-  border:none;
-  border-radius:20px;
-  background:#ff5fa2;
-  color:white;
-  font-size:14px;
-  cursor:pointer;
-}
-</style>
+    .bottom-buttons button {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 20px;
+      background: #ff4fa3;
+      color: white;
+      font-family: inherit;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>Things I Like About You ðŸ’–</h1>
+  <h1>Things I Like About You 🖤</h1>
 
-<div class="scene">
-  <div class="arrow left" onclick="prevCard()">â€¹</div>
+  <div class="card-wrapper">
+    <div class="arrow left" onclick="prevCard()">&#8249;</div>
 
-  <div class="card" id="card" onclick="flipCard()">
-    <div class="card-face front" id="frontText">ONE</div>
-    <div class="card-face back" id="backText"></div>
+    <div class="card" id="card" onclick="flipCard()">
+      <div class="card-face card-front" id="cardFront">ONE</div>
+      <div class="card-face card-back" id="cardBack"></div>
+    </div>
+
+    <div class="arrow right" onclick="nextCard()">&#8250;</div>
   </div>
 
-  <div class="arrow right" onclick="nextCard()">â€º</div>
-</div>
+  <!-- DO NOT TOUCH -->
+  <div class="bottom-buttons">
+    <button onclick="location.href='intro.html'">Back</button>
+    <button onclick="location.href='present.html'">Next</button>
+  </div>
 
-<div class="controls">
-  <button onclick="location.href='intro.html'">Back</button>
-  <button onclick="location.href='present.html'">Next</button>
-</div>
+  <script>
+    const cards = [
+      "Your laugh, those soft giggles",
+      "Jism 👅",
+      "The way you are calm in every situation",
+      "Your childish behaviour",
+      "How you never get angry at me no matter what I do",
+      "Your behaviour",
+      "Whole you 💋"
+    ];
 
-<script>
-const reasons = [
-  "Your laugh, those soft giggles ðŸ’•",
-  "Jism ðŸ‘…",
-  "The way you stay calm in every situation",
-  "Your childish behaviour",
-  "How you never get angry at me no matter what I do",
-  "Your behaviour",
-  "Whole you ðŸ’‹"
-];
+    const numbers = ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN"];
 
-let index = 0;
-const card = document.getElementById("card");
-const frontText = document.getElementById("frontText");
-const backText = document.getElementById("backText");
+    let index = 0;
+    let flipped = false;
 
-function updateCard(){
-  card.classList.remove("is-flipped");
-  frontText.textContent = ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN"][index];
-  backText.textContent = reasons[index];
-}
+    const card = document.getElementById("card");
+    const front = document.getElementById("cardFront");
+    const back = document.getElementById("cardBack");
 
-function flipCard(){
-  card.classList.toggle("is-flipped");
-}
+    function updateCard() {
+      flipped = false;
+      card.classList.remove("flipped");
+      front.textContent = numbers[index];
+      back.textContent = cards[index];
+    }
 
-function nextCard(){
-  index = (index + 1) % reasons.length;
-  updateCard();
-}
+    function flipCard() {
+      flipped = !flipped;
+      card.classList.toggle("flipped");
+    }
 
-function prevCard(){
-  index = (index - 1 + reasons.length) % reasons.length;
-  updateCard();
-}
+    function nextCard() {
+      index = (index + 1) % cards.length;
+      updateCard();
+    }
 
-updateCard();
-</script>
+    function prevCard() {
+      index = (index - 1 + cards.length) % cards.length;
+      updateCard();
+    }
+
+    updateCard();
+  </script>
 
 </body>
 </html>
