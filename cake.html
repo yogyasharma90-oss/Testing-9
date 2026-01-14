@@ -18,6 +18,7 @@ h1{margin:15px 0}
   position:relative;
   width:300px;
   margin:30px auto;
+  display: inline-block;
 }
 
 .cake{
@@ -164,13 +165,18 @@ function resetLayer(layer){
 }
 
 function addTopping(img){
-  const t=document.createElement("img");
-  t.src=img;
-  t.className="topping";
-  t.style.left=Math.random()*220+"px";
-  t.style.top=Math.random()*120+"px";
+  const t = document.createElement("img");
+  t.src = img;
+  t.className = "topping";
+
+  const rect = toppingsLayer.getBoundingClientRect();
+
+  t.style.left = Math.random() * (rect.width - 40) + "px";
+  t.style.top = Math.random() * (rect.height - 40) + "px";
+
   toppingsLayer.appendChild(t);
 }
+
 
 function addCandle(img){
   const c=document.createElement("img");
