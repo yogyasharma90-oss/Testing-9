@@ -2,277 +2,361 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cake Gift 🎂</title>
-
+<title>Cake 🎂</title>
 <style>
-body{
-  margin:0;
-  background:#fff7fb;
-  font-family:'Poppins', sans-serif;
-  overflow:hidden;
-  text-align:center;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-/* 🎈 Balloons */
-.balloon{
-  position:absolute;
-  top:-40px;
-  width:50px;
-  height:70px;
-  background:pink;
-  border-radius:50%;
-}
-.balloon::after{
-  content:"";
-  position:absolute;
-  bottom:-20px;
-  left:50%;
-  width:2px;
-  height:20px;
-  background:#aaa;
-}
-#balloons{
-  display:flex;
-  gap:40px;
-  left:50%;
-  transform:translateX(-50%);
-  position:absolute;
-}
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #ffe6e6, #fff5e6);
+  }
 
-/* 🎂 Cake */
-#cake{
-  position:absolute;
-  top:35%;
-  left:50%;
-  transform:translateX(-50%);
-}
-.tier{
-  background:white;
-  border-radius:10px;
-  margin:5px auto;
-}
-.tier1{width:220px;height:65px;}
-.tier2{width:180px;height:60px;}
-.tier3{width:140px;height:55px;}
+  /* Cake */
+  #cake {
+    position: relative;
+    width: 300px;
+    margin: 80px auto 0;
+    z-index: 1;
+  }
+  .tier {
+    width: 300px;
+    height: 80px;
+    background: #fff; /* default cream */
+    border-radius: 20px;
+    margin-bottom: -20px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+  }
 
-#candles{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
+  /* Candles */
+  .candle {
+    position: absolute;
+    width: 40px;
+    height: 80px;
+    bottom: 100%;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .flame {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    width: 15px;
+    height: 25px;
+    margin-left: -7.5px;
+    background: radial-gradient(circle, #fffa90, #ff6b00);
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: flicker 0.3s infinite;
+    display: none;
+    z-index: 10;
+  }
+  @keyframes flicker {
+    0% { transform: scale(1,1); opacity:1; }
+    50% { transform: scale(1.1,0.9); opacity:0.9; }
+    100% { transform: scale(1,1); opacity:1; }
+  }
 
-/* 🎨 Panel */
-#panel{
-  position:absolute;
-  right:-340px;
-  top:0;
-  width:340px;
-  height:100%;
-  background:white;
-  box-shadow:-5px 0 15px rgba(0,0,0,.2);
-  padding:20px;
-  transition:.4s;
-}
-#panel.show{right:0}
+  /* Decorations panel */
+  #decorPanel {
+    position: absolute;
+    right: 20px;
+    top: 100px;
+    width: 160px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    padding: 10px;
+    z-index: 20;
+  }
+  .panel-btn {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    background: hotpink;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
-button{
-  padding:10px 18px;
-  margin:6px;
-  border:none;
-  border-radius:20px;
-  background:#ff5fa2;
-  color:white;
-  cursor:pointer;
-  font-size:14px;
-}
-button.small{
-  background:#ddd;
-  color:#333;
-}
+  /* Panel sections */
+  .section {
+    display: none;
+    margin-top: 10px;
+  }
+  .backBtn {
+    background: #999;
+  }
 
-.option{
-  display:inline-block;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  margin:6px;
-  cursor:pointer;
-}
+  /* Buttons below cake */
+  #actionBtn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 40px;
+    font-size: 20px;
+    background: hotpink;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 50;
+  }
 
-/* ✨ Confetti */
-.confetti{
-  position:absolute;
-  width:8px;
-  height:12px;
-  animation:fall 3s linear infinite;
-}
-@keyframes fall{
-  from{top:-20px;}
-  to{top:100vh;}
-}
+  /* Make a wish text */
+  #wishText {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Great Vibes', cursive;
+    color: #ff69b4;
+    display: none;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 50;
+  }
 
-/* 🎉 Birthday Text */
-#birthdayText{
-  display:none;
-  position:absolute;
-  top:15%;
-  width:100%;
-  font-size:48px;
-  font-weight:800;
-  color:#ff3b8d;
-  letter-spacing:2px;
-}
+  /* Balloons */
+  .balloon {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    top: -150px;
+    cursor: pointer;
+    z-index: 10;
+  }
 
-#backBtn{
-  display:none;
-  position:absolute;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-}
+  /* Confetti canvas */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 100;
+  }
+
 </style>
 </head>
-
 <body>
 
-<div id="birthdayText">HAPPY BIRTHDAY 🎉</div>
-
-<!-- 🎈 Balloons -->
-<div id="balloons">
-  <div class="balloon"></div>
-  <div class="balloon"></div>
-  <div class="balloon"></div>
-</div>
-
-<!-- 🎂 Cake -->
 <div id="cake">
-  <div id="candles"></div>
-  <div class="tier tier3"></div>
-  <div class="tier tier2"></div>
-  <div class="tier tier1"></div>
+  <div class="tier" id="bottomTier"></div>
+  <div class="tier" id="middleTier"></div>
+  <div class="tier" id="topTier"></div>
 </div>
 
-<!-- Controls -->
-<div style="position:absolute;bottom:90px;left:50%;transform:translateX(-50%);">
-  <button onclick="openPanel()">Decorate</button>
-  <button onclick="finishDecorating()">Finished Decorating</button>
+<!-- Candles -->
+<img src="candle_heart.png" class="candle" id="candleHeart">
+<div class="flame" id="flameHeart"></div>
+<img src="candle_normal.png" class="candle" id="candleNormal">
+<div class="flame" id="flameNormal"></div>
+<img src="candle_age.png" class="candle" id="candleAge">
+<div class="flame" id="flameAge"></div>
+
+<!-- Balloons -->
+<img src="balloon1.png" class="balloon" id="balloon1">
+<img src="balloon2.png" class="balloon" id="balloon2">
+<img src="balloon3.png" class="balloon" id="balloon3">
+
+<!-- Decoration Panel -->
+<div id="decorPanel">
+  <button class="panel-btn" id="colorBtn">Color</button>
+  <div class="section" id="colorSection">
+    <button class="panel-btn colorChoice" data-color="#fff">White</button>
+    <button class="panel-btn colorChoice" data-color="#a0522d">Brown</button>
+    <button class="panel-btn colorChoice" data-color="#ffc0cb">Pink</button>
+    <button class="panel-btn colorChoice" data-color="#fffacd">Pastel Yellow</button>
+    <button class="panel-btn backBtn">Back</button>
+  </div>
+  <button class="panel-btn" id="toppingsBtn">Toppings</button>
+  <div class="section" id="toppingSection">
+    <button class="panel-btn toppingChoice" data-img="strawberry.png">Strawberry</button>
+    <button class="panel-btn toppingChoice" data-img="blueberry.png">Blueberry</button>
+    <button class="panel-btn toppingChoice" data-img="cherry.png">Cherry</button>
+    <button class="panel-btn toppingChoice" data-img="chocolate.png">Chocolate</button>
+    <button class="panel-btn toppingChoice" data-img="sprinkle.png">Sprinkles</button>
+    <button class="panel-btn toppingChoice" data-img="oreo.png">Oreo</button>
+    <button class="panel-btn backBtn">Back</button>
+  </div>
+  <button class="panel-btn" id="candleBtn">Candles</button>
+  <div class="section" id="candleSection">
+    <button class="panel-btn candleChoice" data-candle="candle_heart.png">Heart</button>
+    <button class="panel-btn candleChoice" data-candle="candle_normal.png">Normal</button>
+    <button class="panel-btn candleChoice" data-candle="candle_age.png">Age</button>
+    <button class="panel-btn backBtn">Back</button>
+  </div>
+  <button class="panel-btn" id="finishBtn">Finished Decorating</button>
 </div>
 
-<!-- Back -->
-<div id="backBtn">
-  <button onclick="window.location.href='present.html'">← Back</button>
-</div>
+<div id="wishText">Make a Wish</div>
+<button id="actionBtn">Light the Candles</button>
 
-<!-- 🎨 Panel -->
-<div id="panel">
-  <h3 id="panelTitle">Decorate</h3>
-  <div id="panelContent"></div>
-</div>
+<canvas id="confetti"></canvas>
 
 <script>
-const panel = document.getElementById("panel");
-const content = document.getElementById("panelContent");
-const tiers = document.querySelectorAll(".tier");
-const candlesDiv = document.getElementById("candles");
-const birthdayText = document.getElementById("birthdayText");
-const backBtn = document.getElementById("backBtn");
+  // ==== Decoration Panel Logic ====
+  const colorBtn = document.getElementById("colorBtn");
+  const toppingsBtn = document.getElementById("toppingsBtn");
+  const candleBtn = document.getElementById("candleBtn");
+  const finishBtn = document.getElementById("finishBtn");
+  const actionBtn = document.getElementById("actionBtn");
+  const wishText = document.getElementById("wishText");
 
-/* Panel */
-function openPanel(){
-  panel.classList.add("show");
-  mainMenu();
-}
-function closePanel(){
-  panel.classList.remove("show");
-}
-function mainMenu(){
-  panelTitle.innerText="Decorate Cake";
-  content.innerHTML=`
-    <button onclick="colorMenu()">Colour</button>
-    <button onclick="toppingMenu()">Toppings</button>
-    <button onclick="candleMenu()">Candles</button>
-    <button class="small" onclick="closePanel()">Close</button>
-  `;
-}
+  const colorSection = document.getElementById("colorSection");
+  const toppingSection = document.getElementById("toppingSection");
+  const candleSection = document.getElementById("candleSection");
 
-/* 🎨 Colour */
-function colorMenu(){
-  panelTitle.innerText="Cake Colour";
-  content.innerHTML=`
-    <div class="option" style="background:white" onclick="setColor('white')"></div>
-    <div class="option" style="background:pink" onclick="setColor('pink')"></div>
-    <div class="option" style="background:lavender" onclick="setColor('lavender')"></div>
-    <div class="option" style="background:peachpuff" onclick="setColor('peachpuff')"></div>
-    <br><button class="small" onclick="mainMenu()">← Back</button>
-  `;
-}
-function setColor(c){
-  tiers.forEach(t=>t.style.background=c);
-}
+  const tiers = [document.getElementById("bottomTier"), document.getElementById("middleTier"), document.getElementById("topTier")];
 
-/* 🍓 Toppings */
-function toppingMenu(){
-  panelTitle.innerText="Toppings";
-  content.innerHTML=`
-    <button onclick="addTopping('🍓')">Strawberry</button>
-    <button onclick="addTopping('🍒')">Cherry</button>
-    <button onclick="addTopping('🍫')">Chocolate</button>
-    <br><button class="small" onclick="mainMenu()">← Back</button>
-  `;
-}
-function addTopping(e){
-  tiers[0].innerHTML += `<span style="font-size:20px">${e}</span>`;
-}
+  const candleHeart = document.getElementById("candleHeart");
+  const candleNormal = document.getElementById("candleNormal");
+  const candleAge = document.getElementById("candleAge");
 
-/* 🕯️ Candles */
-function candleMenu(){
-  panelTitle.innerText="Candles";
-  content.innerHTML=`
-    <button onclick="addCandle('🕯️')">Classic</button>
-    <button onclick="addCandle('❤️')">Heart</button>
-    <button onclick="addCandle('⭐')">Star</button>
-    <br><button class="small" onclick="mainMenu()">← Back</button>
-  `;
-}
-function addCandle(c){
-  candlesDiv.innerHTML += `<span style="font-size:24px">${c}</span>`;
-}
+  const flameHeart = document.getElementById("flameHeart");
+  const flameNormal = document.getElementById("flameNormal");
+  const flameAge = document.getElementById("flameAge");
 
-/* 🎉 Final Animation */
-function finishDecorating(){
-  closePanel();
-  setTimeout(()=>alert("Light the candle 🕯️"),600);
-  setTimeout(()=>alert("Make a wish ✨"),1600);
-  setTimeout(blowCandles,2600);
-}
+  const balloons = [
+    document.getElementById("balloon1"),
+    document.getElementById("balloon2"),
+    document.getElementById("balloon3")
+  ];
 
-function blowCandles(){
-  candlesDiv.innerHTML="";
-  popBalloons();
-  confettiRain();
-  setTimeout(showBirthday,1500);
-}
+  let selectedToppings = [];
+  let selectedCandles = ["candle_heart.png","candle_normal.png","candle_age.png"];
 
-function popBalloons(){
-  document.querySelectorAll(".balloon").forEach(b=>b.style.display="none");
-}
+  // === Panel toggle logic ===
+  colorBtn.onclick = ()=>{colorSection.style.display="block"; toppingSection.style.display="none"; candleSection.style.display="none";}
+  toppingsBtn.onclick = ()=>{toppingSection.style.display="block"; colorSection.style.display="none"; candleSection.style.display="none";}
+  candleBtn.onclick = ()=>{candleSection.style.display="block"; colorSection.style.display="none"; toppingSection.style.display="none";}
 
-function confettiRain(){
-  for(let i=0;i<120;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+  document.querySelectorAll(".backBtn").forEach(b=>{
+    b.onclick=()=>{colorSection.style.display="none"; toppingSection.style.display="none"; candleSection.style.display="none";}
+  });
+
+  document.querySelectorAll(".colorChoice").forEach(c=>{
+    c.onclick=()=>{tiers.forEach(t=>t.style.background=c.dataset.color);}
+  });
+
+  document.querySelectorAll(".toppingChoice").forEach(t=>{
+    t.onclick=()=>{
+      const img = document.createElement("img");
+      img.src=t.dataset.img;
+      img.style.position="absolute";
+      img.style.width="40px";
+      img.style.height="40px";
+      img.style.top=Math.random()*60+"px";
+      img.style.left=Math.random()*220+"px";
+      img.style.zIndex=5;
+      tiers[0].appendChild(img);
+    }
+  });
+
+  // Finished decorating
+  finishBtn.onclick = ()=>{
+    document.getElementById("decorPanel").style.display="none";
+    actionBtn.style.display="inline-block";
+  };
+
+  // Place candles evenly
+  candleHeart.style.left="50px"; candleHeart.style.bottom="80px";
+  candleNormal.style.left="120px"; candleNormal.style.bottom="80px";
+  candleAge.style.left="200px"; candleAge.style.bottom="80px";
+
+  // Action Button logic
+  let stage=0; // 0=light candles, 1=blow candles, 2=done
+  actionBtn.onclick = ()=>{
+    if(stage===0){
+      // Light candles
+      flameHeart.style.display="block";
+      flameNormal.style.display="block";
+      flameAge.style.display="block";
+      wishText.style.display="block";
+      actionBtn.textContent="Blow the Candle";
+      stage=1;
+    } else if(stage===1){
+      // Blow candles, pop balloons, confetti
+      flameHeart.style.display="none";
+      flameNormal.style.display="none";
+      flameAge.style.display="none";
+      wishText.style.display="none";
+      actionBtn.style.display="none";
+      popBalloons();
+    }
+  };
+
+  // ==== Confetti Logic ====
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  let particles = [];
+
+  function createConfetti(x, y){
+    for(let i=0;i<100;i++){
+      particles.push({
+        x, y,
+        vx:(Math.random()*12-6),
+        vy:(Math.random()*-10-2),
+        w:Math.random()*8+4,
+        h:Math.random()*4+2,
+        r:Math.random()*360,
+        rs:Math.random()*8-4,
+        c:Math.random()>0.5?"rgba(212,175,55,0.95)":"rgba(220,220,220,0.95)",
+        life:200
+      });
+    }
+    animateConfetti();
   }
-}
 
-function showBirthday(){
-  birthdayText.style.display="block";
-  backBtn.style.display="block";
-}
+  function animateConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.r*Math.PI/180);
+      ctx.fillStyle=p.c;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.r+=p.rs; p.life--;
+      if(p.life<=0) particles.splice(i,1);
+    });
+    if(particles.length>0) requestAnimationFrame(animateConfetti);
+    else showBackButton();
+  }
+
+  function popBalloons(){
+    balloons.forEach((b,i)=>{
+      b.style.transition="all 0.6s ease";
+      b.style.transform="scale(0)";
+      b.style.opacity=0;
+      setTimeout(()=>{createConfetti(b.offsetLeft+40,b.offsetTop+60)},600);
+    });
+  }
+
+  function showBackButton(){
+    const backBtn = document.createElement("button");
+    backBtn.textContent="Back";
+    backBtn.style.position="absolute";
+    backBtn.style.bottom="40px";
+    backBtn.style.left="50%";
+    backBtn.style.transform="translateX(-50%)";
+    backBtn.style.padding="12px 40px";
+    backBtn.style.fontSize="20px";
+    backBtn.style.background="hotpink";
+    backBtn.style.color="white";
+    backBtn.style.border="none";
+    backBtn.style.borderRadius="50px";
+    backBtn.style.cursor="pointer";
+    backBtn.onclick=()=>{window.location.href="present.html"};
+    document.body.appendChild(backBtn);
+  }
+
 </script>
-
 </body>
 </html>
