@@ -22,6 +22,7 @@ h1{margin:15px 0}
 
 .cake{
   width:100%;
+  display:block;
 }
 
 .layer{
@@ -86,11 +87,9 @@ h1{margin:15px 0}
 #lightBtn{display:none}
 
 .confetti{
-  position:fixed;
-  width:8px;
-  height:8px;
-  top:-10px;
-  animation:fall 2s linear forwards;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
 }
 
 @keyframes fall{
@@ -193,7 +192,7 @@ function lightCandles(){
 }
 
 function makeConfetti(){
-  for(let i=0;i<80;i++){
+  for(let i=0;i<40;i++){
     const c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
