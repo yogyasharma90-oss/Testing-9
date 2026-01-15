@@ -18,13 +18,8 @@ h1{margin:15px 0}
   position:relative;
   width:300px;
   margin:30px auto;
-}
-
-/* REAL wrapper that fits visible cake only */
-.cake-wrapper{
-  position:relative;
-  width:100%;
-  display:inline-block;
+  display:flex;
+  justify-content:center;
 }
 
 .cake{
@@ -46,22 +41,42 @@ h1{margin:15px 0}
   position:absolute;
 }
 
+#candleContainer{
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 0;
+  pointer-events: none;
+}
+
 .candle{
-  width:35px;
-  position:absolute;
-  bottom:70%;
+  poistion: absolute;
+  width: 25px;
+  height: 60px;
+  transform: translateX(-50%);
 }
 
 .flame{
   width:12px;
   height:20px;
   background:radial-gradient(circle, yellow, orange, red);
-  border-radius:50%;
+  border-radius:50% 50% 50% 50%;
   position:absolute;
   top:-18px;
   left:50%;
   transform:translateX(-50%);
   animation:flicker 0.15s infinite;
+}
+
+.candles-layer{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 @keyframes flicker{
@@ -94,9 +109,12 @@ h1{margin:15px 0}
 #lightBtn{display:none}
 
 .confetti{
+  position: fixed;
+  top: -10px;
   width: 6px;
   height: 6px;
   border-radius: 2px;
+  animation: fall 2s linear forwards;
 }
 
 @keyframes fall{
@@ -110,14 +128,11 @@ h1{margin:15px 0}
 <h1>Decorate Your Cake 🎂</h1>
 
 <div class="cake-area">
-  
-  <!-- NEW bounding wrapper -->
-  <div class="cake-wrapper">
-    <img src="chococake.png" class="cake">
-    <div id="toppingsLayer" class="layer"></div>
-    <div id="candlesLayer" class="layer"></div>
-  </div>
+  <img src="chococake.png" class="cake">
 
+  <div id="toppingsLayer" class="layer"></div>
+  <div id="candlesLayer" class="layer"></div>
+  <div id = "candleContainer"></div>
 </div>
 
 <div class="panel">
@@ -175,23 +190,16 @@ function resetLayer(layer){
 }
 
 function addTopping(img){
-
   const t = document.createElement("img");
-  t.src = img;
+  t.src=img;
   t.className = "topping";
 
-  const wrapper = document.querySelector(".cake-wrapper");
-  const rect = wrapper.getBoundingClientRect();
-
-  // NEW — Proper constrained topping placement
-  const x = rect.width * (0.18 + Math.random() * 0.64);
-  const y = rect.height * (0.22 + Math.random() * 0.18);
-
-  t.style.left = x + "px";
-  t.style.top = y + "px";
+  t.style.left = (40+Math.random()*140) + "px";
+  t.style.top = (60+Math.random()*60) + "px";
 
   toppingsLayer.appendChild(t);
 }
+
 
 function addCandle(img){
   const c=document.createElement("img");
