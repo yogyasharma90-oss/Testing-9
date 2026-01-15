@@ -152,8 +152,11 @@ h1{margin:15px 0}
     <button class="btn" onclick="openCandles()">Candles</button>
   </div>
 
-  <button class="btn" id="lightBtn" onclick="lightCandles()">Light Candles 🔥</button>
+  <button class="btn" id="lightBtn" onclick="lightCandles()">Celebrate</button>
 </div>
+
+<button class="btn" onclick="goBack()">Back</button>
+
 
 <script>
 const panelTitle=document.getElementById("panelTitle");
@@ -241,6 +244,13 @@ function makeConfetti(){
   }
 }
 </script>
+
+<script>
+function goBack(){
+    window.location.href = "present.html";
+}
+</script>
+
 
 </body>
 </html>
