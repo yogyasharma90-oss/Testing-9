@@ -2,98 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Parcel Surprise 🎁</title>
+<title>Certificate 🎁</title>
 
 <style>
 body{
   margin:0;
   height:100vh;
-  background:#fff1f4;
+  background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  font-family:"Segoe UI", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   overflow:hidden;
 }
 
-/* Center content */
-.container{
+/* TEXT */
+h1{
+  font-size:32px;
+  color:#ff4d88;
+  margin-bottom:15px;
+  z-index:3;
   text-align:center;
+}
+
+/* MAIN IMAGE */
+.main-image{
+  width:360px;
+  max-width:85vw;
+  transition:transform 0.5s ease, opacity 0.5s ease;
   z-index:3;
 }
 
-h1{
-  font-size:24px;
-  color:#444;
-  margin-bottom:20px;
-}
-
-img.main{
-  width:220px;
-  cursor:pointer;
-  transition:transform 0.3s ease;
-}
-
-/* Opening animation */
-.opening{
-  animation:openParcel 0.8s ease forwards;
-}
-
-@keyframes openParcel{
-  0%{ transform:scale(1) rotate(0deg); }
-  20%{ transform:scale(1.05) rotate(-3deg); }
-  40%{ transform:scale(1.05) rotate(3deg); }
-  60%{ transform:scale(1.1) rotate(-2deg); }
-  80%{ transform:scale(1.15) rotate(2deg); }
-  100%{ transform:scale(1.2); }
-}
-
-p{
-  font-size:18px;
-  color:#666;
-  margin-top:15px;
-}
-
-/* Back button */
+/* BUTTONS */
 button{
-  margin-top:20px;
-  padding:10px 18px;
+  margin-top:15px;
+  padding:12px 30px;
   border:none;
-  border-radius:20px;
-  background:#ff9db5;
+  border-radius:30px;
+  background:#ff4d88;
   color:white;
-  font-size:16px;
+  font-size:18px;
   cursor:pointer;
-  display:none;
+  box-shadow:0 8px 20px rgba(255,77,136,0.4);
+  z-index:3;
 }
 
 button:hover{
-  background:#ff7fa3;
+  transform:scale(1.05);
 }
 
-/* Stickers */
+#backBtn{
+  display:none;
+  background:#ff8fab;
+}
+
+/* STICKERS */
 .sticker{
   position:absolute;
-  width:75px;
-  opacity:0.9;
+  width:100px;
   z-index:1;
+  opacity:0.95;
+  pointer-events:none;
 }
 
-/* Floating hearts */
+/* HEARTS */
 .heart{
   position:absolute;
-  bottom:-20px;
-  font-size:20px;
-  animation:floatUp linear infinite;
+  bottom:-30px;
+  font-size:22px;
+  animation:floatUp 6s linear forwards;
   opacity:0.8;
-  z-index:2;
 }
 
 @keyframes floatUp{
-  from{
-    transform:translateY(0);
-    opacity:1;
-  }
   to{
     transform:translateY(-110vh);
     opacity:0;
@@ -104,73 +86,72 @@ button:hover{
 
 <body>
 
-<!-- Stickers -->
+<h1 id="titleText">You have received a parcel 🎁</h1>
+
+<img src="parcel.png" id="mainImage" class="main-image">
+
+<button id="openBtn">Click to open</button>
+<button id="backBtn" onclick="window.location.href='present.html'">Back</button>
+
+<!-- STICKERS -->
 <img src="sticker1.png" class="sticker">
 <img src="sticker2.png" class="sticker">
 <img src="sticker3.png" class="sticker">
 <img src="sticker4.png" class="sticker">
 <img src="sticker5.png" class="sticker">
-<img src="sticker6.png" class="sticker">
-
-<div class="container">
-  <h1 id="title">You have received a parcel</h1>
-
-  <img src="parcel.png" id="mainImage" class="main" onclick="openParcel()">
-
-  <p id="subtext">Click to open</p>
-
-  <button id="backBtn" onclick="goBack()">⬅ Back</button>
-</div>
 
 <script>
-/* Random sticker placement */
-document.querySelectorAll(".sticker").forEach(sticker => {
-  sticker.style.top = Math.random() * 80 + "%";
-  sticker.style.left = Math.random() * 80 + "%";
-  sticker.style.transform = `rotate(${Math.random()*30 - 15}deg)`;
+/* STICKER POSITIONS (SAFE ZONES) */
+const zones=[
+  {top:"5%",left:"5%"},
+  {top:"5%",left:"75%"},
+  {top:"70%",left:"5%"},
+  {top:"70%",left:"75%"},
+  {top:"40%",left:"85%"}
+];
+
+document.querySelectorAll(".sticker").forEach((s,i)=>{
+  s.style.top=zones[i].top;
+  s.style.left=zones[i].left;
+  s.style.transform=`rotate(${Math.random()*30-15}deg)`;
 });
 
-/* Parcel opening */
-function openParcel(){
-  const img = document.getElementById("mainImage");
+/* OPEN PARCEL */
+document.getElementById("openBtn").onclick=()=>{
+  const img=document.getElementById("mainImage");
 
-  img.classList.add("opening");
+  img.style.transform="scale(0.8) rotate(-5deg)";
+  img.style.opacity="0";
 
-  setTimeout(() => {
-    img.src = "award.png";
-    img.classList.remove("opening");
+  setTimeout(()=>{
+    img.src="award.png";
+    img.style.opacity="1";
+    img.style.transform="scale(1)";
+  },500);
 
-    document.getElementById("title").innerText =
-      "Congratulations you’ve won, here’s a certificate 💋";
+  document.getElementById("titleText").innerText=
+    "Congratulations! You’ve won — here’s a certificate 💋";
 
-    document.getElementById("subtext").style.display = "none";
-    document.getElementById("backBtn").style.display = "inline-block";
-  }, 800);
+  document.getElementById("openBtn").style.display="none";
+
+  setTimeout(()=>{
+    document.getElementById("backBtn").style.display="block";
+  },900);
+
+  startHearts();
+};
+
+/* FLOATING HEARTS */
+function startHearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },350);
 }
-
-/* Back button */
-function goBack(){
-  window.location.href = "present.html";
-}
-
-/* Floating hearts generator */
-function createHeart(){
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerText = "💗";
-
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 10 + 16 + "px";
-  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 7000);
-}
-
-setInterval(createHeart, 500);
 </script>
 
 </body>
