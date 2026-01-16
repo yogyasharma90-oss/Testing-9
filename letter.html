@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>One Question 💌</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .box {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 320px;
+    box-shadow: 0 0 30px rgba(255,105,180,0.4);
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  button {
+    background: hotpink;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  .error {
+    margin-top: 15px;
+    color: #ffe6f0;
+    display: none;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>What was the date when we first started talking?</h2>
+  <input type="text" id="answer" placeholder="Type your answer...">
+  <button onclick="checkAnswer()">Check</button>
+  <div class="error" id="error">Hmm… try again 👀</div>
+</div>
+
+<script>
+function checkAnswer() {
+  const val = document.getElementById("answer").value
+    .toLowerCase()
+    .trim();
+
+  if (val === "14 may" || val === "14th may" || val === "14") {
+    window.location.href = "actletter.html";
+  } else {
+    document.getElementById("error").style.display = "block";
+  }
+}
+</script>
+
+</body>
+</html>
