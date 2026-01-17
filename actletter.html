@@ -7,7 +7,6 @@
 <style>
 body{
   margin:0;
-  min-height:100vh;
   background:#f6efe6;
   font-family: "Georgia", serif;
   overflow-x:hidden;
@@ -28,73 +27,73 @@ h1{
   flex-wrap:wrap;
 }
 
-/* LETTER AREA */
+/* LETTER WRAPPER */
 .letter-wrapper{
   position:relative;
   width:380px;
-  height:600px;
 }
 
 /* ENVELOPE */
 .envelope{
-  position:absolute;
+  position:relative;
   width:100%;
-  top:80px;
-  left:0;
+  margin-top:40px;
   transition:all 1s ease;
   z-index:3;
 }
 
 .envelope img{
   width:100%;
-  display:block;
 }
 
 /* SEAL */
 .seal{
   position:absolute;
-  width:35px;
+  width:34px;
   top:55%;
   left:50%;
   transform:translate(-50%,-50%);
-  transition:all 0.5s ease;
+  transition:all 0.6s ease;
 }
 
 /* PAPER */
 .paper{
-  position:absolute;
-  width:360px;
-  height:520px;
+  width:100%;
   background:url("paper.png") no-repeat center/cover;
-  top:90px;
-  left:10px;
+  margin-top:-140px;
+  padding:70px 40px 60px;
+  box-sizing:border-box;
   transform:scaleY(0);
   transform-origin:top;
   opacity:0;
   transition:all 1.2s ease;
-  z-index:1;
 }
 
-/* TEXT ON PAPER */
+/* TEXT */
 .letter-text{
-  padding:60px 40px;
-  font-size:15px;
-  line-height:1.8;
+  font-size:16px;
+  line-height:1.9;
   color:#3a2a1f;
   white-space:pre-line;
 }
 
-/* OPEN BUTTON */
-.open-btn{
+/* BUTTONS */
+.btn{
   display:block;
-  margin:20px auto 0;
-  padding:10px 24px;
+  margin:18px auto;
+  padding:10px 26px;
   border:none;
-  border-radius:20px;
+  border-radius:22px;
   background:#c96b6b;
   color:white;
   font-size:14px;
   cursor:pointer;
+}
+
+/* NEXT BUTTON (hidden initially) */
+.next-btn{
+  display:none;
+  background:#a35b5b;
 }
 
 /* OPEN STATE */
@@ -142,9 +141,8 @@ h1{
 
 <div class="container">
 
-  <!-- LETTER -->
   <div>
-    <div class="letter-wrapper" id="letter">
+    <div class="letter-wrapper openable" id="letter">
 
       <div class="envelope">
         <img src="envelope.png">
@@ -177,10 +175,10 @@ I LOVE YOU SO MUCH 💋💋
 
     </div>
 
-    <button class="open-btn" onclick="openLetter()">Open 💌</button>
+    <button class="btn" onclick="openLetter()">Open 💌</button>
+    <button class="btn next-btn" id="nextBtn" onclick="goNext()">Click for kissi 😘</button>
   </div>
 
-  <!-- PHOTO -->
   <img src="us.jpg" class="photo">
 
 </div>
@@ -188,7 +186,12 @@ I LOVE YOU SO MUCH 💋💋
 <script>
 function openLetter(){
   document.getElementById("letter").classList.add("open");
+  document.getElementById("nextBtn").style.display="block";
   startHearts();
+}
+
+function goNext(){
+  window.location.href="kissi.html";
 }
 
 function startHearts(){
