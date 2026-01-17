@@ -7,7 +7,7 @@
 <style>
 *{
   box-sizing:border-box;
-  font-family: 'Georgia', serif;
+  font-family:'Georgia', serif;
 }
 
 body{
@@ -16,7 +16,6 @@ body{
   overflow:hidden;
 }
 
-/* ===== Heading ===== */
 h1{
   text-align:center;
   margin-top:20px;
@@ -24,7 +23,7 @@ h1{
   font-weight:500;
 }
 
-/* ===== Main Layout ===== */
+/* Layout */
 .container{
   display:flex;
   height:100vh;
@@ -32,10 +31,11 @@ h1{
   gap:30px;
 }
 
-/* ===== LEFT SIDE (LETTER) ===== */
+/* LEFT */
 .left{
   flex:1;
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
   position:relative;
@@ -43,10 +43,8 @@ h1{
 
 /* Envelope */
 .envelope{
-  width:420px;
-  cursor:pointer;
+  width:380px;
   position:relative;
-  transition:transform 0.4s ease;
 }
 
 .envelope img{
@@ -54,23 +52,35 @@ h1{
   display:block;
 }
 
-/* Seal */
+/* Smaller seal */
 .seal{
-  width:80px;
+  width:45px;
   position:absolute;
-  top:50%;
+  top:52%;
   left:50%;
   transform:translate(-50%,-50%);
   transition:opacity 0.4s ease, transform 0.4s ease;
 }
 
+/* Open button */
+.open-btn{
+  margin-top:15px;
+  padding:10px 22px;
+  background:#8b3a3a;
+  color:#fff;
+  border:none;
+  border-radius:20px;
+  font-size:15px;
+  cursor:pointer;
+}
+
 /* Paper */
 .paper{
   position:absolute;
-  width:380px;
+  width:360px;
   height:520px;
   background:url('paper.png') center/cover no-repeat;
-  top:60px;
+  top:90px;
   left:50%;
   transform:translateX(-50%) scaleY(0);
   transform-origin:top;
@@ -84,7 +94,7 @@ h1{
 /* Open state */
 .open .seal{
   opacity:0;
-  transform:translate(-50%,-60%) scale(0.6);
+  transform:translate(-50%,-60%) scale(0.5);
 }
 
 .open .paper{
@@ -104,7 +114,7 @@ h1{
 .kiss-btn{
   display:none;
   margin-top:20px;
-  padding:12px 25px;
+  padding:12px 26px;
   border:none;
   background:#c0392b;
   color:white;
@@ -116,10 +126,10 @@ h1{
 
 @keyframes pop{
   from{transform:scale(1);}
-  to{transform:scale(1.05);}
+  to{transform:scale(1.06);}
 }
 
-/* ===== RIGHT SIDE (PHOTO) ===== */
+/* RIGHT */
 .right{
   flex:1;
   display:flex;
@@ -138,7 +148,6 @@ h1{
 .heart{
   position:absolute;
   bottom:-20px;
-  font-size:24px;
   animation:float 6s linear infinite;
   opacity:0.7;
 }
@@ -159,10 +168,12 @@ h1{
 
   <!-- LEFT -->
   <div class="left">
-    <div class="envelope" id="envelope" onclick="openLetter()">
+    <div class="envelope" id="envelope">
       <img src="envelope.png">
       <img src="seal.png" class="seal">
     </div>
+
+    <button class="open-btn" onclick="openLetter()">Open 💌</button>
 
     <div class="paper" id="paper">
       <p>
@@ -201,9 +212,6 @@ I LOVE YOU SO MUCH 💋💋
 <script>
 function openLetter(){
   document.getElementById('envelope').classList.add('open');
-  setTimeout(()=>{
-    document.getElementById('paper').style.display="block";
-  },300);
 
   setTimeout(()=>{
     document.getElementById('kissBtn').style.display="inline-block";
@@ -216,7 +224,6 @@ function goToKiss(){
   window.location.href="kiss.html";
 }
 
-/* Floating hearts */
 function createHearts(){
   setInterval(()=>{
     const heart=document.createElement('div');
@@ -227,7 +234,7 @@ function createHearts(){
     document.body.appendChild(heart);
 
     setTimeout(()=>heart.remove(),6000);
-  },500);
+  },600);
 }
 </script>
 
