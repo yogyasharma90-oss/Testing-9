@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Letter For You 💌</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: 'Georgia', serif;
+}
+
+body{
+  margin:0;
+  background:#f6efe7;
+  overflow:hidden;
+}
+
+/* ===== Heading ===== */
+h1{
+  text-align:center;
+  margin-top:20px;
+  color:#5a3e2b;
+  font-weight:500;
+}
+
+/* ===== Main Layout ===== */
+.container{
+  display:flex;
+  height:100vh;
+  padding:40px;
+  gap:30px;
+}
+
+/* ===== LEFT SIDE (LETTER) ===== */
+.left{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+/* Envelope */
+.envelope{
+  width:420px;
+  cursor:pointer;
+  position:relative;
+  transition:transform 0.4s ease;
+}
+
+.envelope img{
+  width:100%;
+  display:block;
+}
+
+/* Seal */
+.seal{
+  width:80px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  transition:opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Paper */
+.paper{
+  position:absolute;
+  width:380px;
+  height:520px;
+  background:url('paper.png') center/cover no-repeat;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:top;
+  padding:35px;
+  opacity:0;
+  transition:all 1s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  overflow-y:auto;
+}
+
+/* Open state */
+.open .seal{
+  opacity:0;
+  transform:translate(-50%,-60%) scale(0.6);
+}
+
+.open .paper{
+  opacity:1;
+  transform:translateX(-50%) scaleY(1);
+}
+
+/* Letter text */
+.paper p{
+  color:#3a2a1f;
+  line-height:1.8;
+  font-size:16px;
+  white-space:pre-line;
+}
+
+/* Kiss button */
+.kiss-btn{
+  display:none;
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  background:#c0392b;
+  color:white;
+  font-size:16px;
+  border-radius:25px;
+  cursor:pointer;
+  animation:pop 0.8s ease infinite alternate;
+}
+
+@keyframes pop{
+  from{transform:scale(1);}
+  to{transform:scale(1.05);}
+}
+
+/* ===== RIGHT SIDE (PHOTO) ===== */
+.right{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.right img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:15px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:24px;
+  animation:float 6s linear infinite;
+  opacity:0.7;
+}
+
+@keyframes float{
+  0%{transform:translateY(0); opacity:0;}
+  20%{opacity:0.7;}
+  100%{transform:translateY(-800px); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>here’s a letter for you 💌</h1>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="envelope" id="envelope" onclick="openLetter()">
+      <img src="envelope.png">
+      <img src="seal.png" class="seal">
+    </div>
+
+    <div class="paper" id="paper">
+      <p>
+HAPPIEST BIRTHDAY CUTUU 💖  
+
+I know it's not enough but I hope you liked it.  
+It's your 20th birthday and I'm so glad to be here with you, it's also the 20th month of us.  
+
+I love you so much and I love to love you.  
+You are the most important person to me so don't worry I'll never get bored of you.  
+How could I even? You always find new ways to irritate me but I'm fine with it as long as you are happy.  
+
+I'll always be here to support you and love you.  
+Just study properly aur is baar CLAT nhi nikala na toh tu nikal jayega is duniya se mere haatho 💋  
+(jk ik ho jaayega so dw)  
+
+Nhi bhi hua toh it's fine, I'll always be there for you no matter what.  
+I just wish you stay happy and take care of me 🥺  
+
+I LOVE YOU SO MUCH 💋💋
+      </p>
+
+      <button class="kiss-btn" id="kissBtn" onclick="goToKiss()">
+        click for kissi 💋
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <img src="us.jpg">
+  </div>
+
+</div>
+
+<script>
+function openLetter(){
+  document.getElementById('envelope').classList.add('open');
+  setTimeout(()=>{
+    document.getElementById('paper').style.display="block";
+  },300);
+
+  setTimeout(()=>{
+    document.getElementById('kissBtn').style.display="inline-block";
+  },2200);
+
+  createHearts();
+}
+
+function goToKiss(){
+  window.location.href="kiss.html";
+}
+
+/* Floating hearts */
+function createHearts(){
+  setInterval(()=>{
+    const heart=document.createElement('div');
+    heart.className="heart";
+    heart.innerText="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(20+Math.random()*20)+"px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),6000);
+  },500);
+}
+</script>
+
+</body>
+</html>
