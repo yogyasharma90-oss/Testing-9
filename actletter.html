@@ -2,165 +2,136 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>A Letter For You 💌</title>
+<title>Letter for You 💌</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:'Georgia', serif;
-}
-
 body{
   margin:0;
-  background:#f6efe7;
-  overflow:hidden;
+  min-height:100vh;
+  background:#f6efe6;
+  font-family: "Georgia", serif;
+  overflow-x:hidden;
 }
 
 h1{
   text-align:center;
-  margin-top:20px;
+  margin:20px 0;
   color:#5a3e2b;
-  font-weight:500;
 }
 
-/* Layout */
 .container{
   display:flex;
-  height:100vh;
-  padding:40px;
-  gap:30px;
-}
-
-/* LEFT */
-.left{
-  flex:1;
-  display:flex;
-  flex-direction:column;
   justify-content:center;
-  align-items:center;
-  position:relative;
+  align-items:flex-start;
+  gap:40px;
+  padding:20px;
+  flex-wrap:wrap;
 }
 
-/* Wrapper */
+/* LETTER AREA */
 .letter-wrapper{
   position:relative;
+  width:380px;
+  height:600px;
 }
 
-/* Envelope */
+/* ENVELOPE */
 .envelope{
-  width:380px;
-  position:relative;
-  z-index:2;
+  position:absolute;
+  width:100%;
+  top:80px;
+  left:0;
+  transition:all 1s ease;
+  z-index:3;
 }
 
 .envelope img{
   width:100%;
+  display:block;
 }
 
-/* Seal */
+/* SEAL */
 .seal{
-  width:45px;
   position:absolute;
-  top:52%;
+  width:35px;
+  top:55%;
   left:50%;
   transform:translate(-50%,-50%);
   transition:all 0.5s ease;
 }
 
-/* Paper */
+/* PAPER */
 .paper{
   position:absolute;
   width:360px;
   height:520px;
-  background:#fdf8f1;
+  background:url("paper.png") no-repeat center/cover;
   top:90px;
-  left:50%;
-  transform:translateX(-50%) scaleY(0);
+  left:10px;
+  transform:scaleY(0);
   transform-origin:top;
-  padding:35px;
   opacity:0;
-  transition:all 1s ease;
-  box-shadow:0 10px 30px rgba(0,0,0,0.25);
-  overflow-y:auto;
+  transition:all 1.2s ease;
   z-index:1;
+}
+
+/* TEXT ON PAPER */
+.letter-text{
+  padding:60px 40px;
+  font-size:15px;
+  line-height:1.8;
+  color:#3a2a1f;
+  white-space:pre-line;
+}
+
+/* OPEN BUTTON */
+.open-btn{
+  display:block;
+  margin:20px auto 0;
+  padding:10px 24px;
+  border:none;
+  border-radius:20px;
+  background:#c96b6b;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
 }
 
 /* OPEN STATE */
 .open .seal{
   opacity:0;
-  transform:translate(-50%,-70%) scale(0.5);
+  transform:translate(-50%,-80%) scale(0.4);
+}
+
+.open .envelope{
+  opacity:0;
+  transform:translateY(40px);
 }
 
 .open .paper{
   opacity:1;
-  transform:translateX(-50%) scaleY(1);
+  transform:scaleY(1);
 }
 
-/* Letter text */
-.paper p{
-  color:#3a2a1f;
-  line-height:1.8;
-  font-size:16px;
-  white-space:pre-line;
+/* PHOTO */
+.photo{
+  width:260px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Open button */
-.open-btn{
-  margin-top:15px;
-  padding:10px 24px;
-  background:#8b3a3a;
-  color:#fff;
-  border:none;
-  border-radius:22px;
-  font-size:15px;
-  cursor:pointer;
-}
-
-/* Kiss button */
-.kiss-btn{
-  display:none;
-  margin-top:20px;
-  padding:12px 26px;
-  border:none;
-  background:#c0392b;
-  color:white;
-  font-size:16px;
-  border-radius:25px;
-  cursor:pointer;
-  animation:pop 0.8s ease infinite alternate;
-}
-
-@keyframes pop{
-  from{transform:scale(1);}
-  to{transform:scale(1.06);}
-}
-
-/* RIGHT */
-.right{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.right img{
-  max-width:90%;
-  border-radius:15px;
-  box-shadow:0 15px 35px rgba(0,0,0,0.3);
-}
-
-/* Hearts */
+/* HEARTS */
 .heart{
-  position:absolute;
+  position:fixed;
   bottom:-20px;
-  animation:float 6s linear infinite;
-  opacity:0.7;
+  animation:float 6s linear forwards;
 }
 
 @keyframes float{
-  0%{transform:translateY(0); opacity:0;}
-  20%{opacity:0.7;}
-  100%{transform:translateY(-800px); opacity:0;}
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -171,8 +142,8 @@ h1{
 
 <div class="container">
 
-  <!-- LEFT -->
-  <div class="left">
+  <!-- LETTER -->
+  <div>
     <div class="letter-wrapper" id="letter">
 
       <div class="envelope">
@@ -181,26 +152,27 @@ h1{
       </div>
 
       <div class="paper">
-        <p>
-HAPPIEST BIRTHDAY CUTUU 💖  
+        <div class="letter-text">
+HAPPIEST BIRTHDAY CUTUU 💕
 
 I know it's not enough but I hope you liked it.
 It's your 20th birthday and I'm so glad to be here with you, it's also the 20th month of us.
 
 I love you so much and I love to love you.
-You are the most important person to me so don't worry I'll never get bored of you.
+You are the most important person to me so don't worry I'll never get bored of you, how could I even.
 
 You always find new ways to irritate me but I'm fine with it as long as you are happy.
 
-Just study properly aur is baar CLAT nhi nikala na toh tu nikal jayega is duniya se mere haatho 💋
-(jk ik ho jaayega)
+I'll always be here to support you and love you.
+Just study properly aur is baar CLAT nahi nikla na toh tu nikal jayega is duniya se mere haatho 💋 jk.
+
+I know ho jaayega, so don't worry.
+And even if it doesn't, it's fine — I'll still be here.
+
+I just wish you stay happy and take care of me 🥺
 
 I LOVE YOU SO MUCH 💋💋
-        </p>
-
-        <button class="kiss-btn" id="kissBtn" onclick="goToKiss()">
-          click for kissi 💋
-        </button>
+        </div>
       </div>
 
     </div>
@@ -208,37 +180,25 @@ I LOVE YOU SO MUCH 💋💋
     <button class="open-btn" onclick="openLetter()">Open 💌</button>
   </div>
 
-  <!-- RIGHT -->
-  <div class="right">
-    <img src="us.jpg">
-  </div>
+  <!-- PHOTO -->
+  <img src="us.jpg" class="photo">
 
 </div>
 
 <script>
 function openLetter(){
-  document.getElementById('letter').classList.add('open');
-
-  setTimeout(()=>{
-    document.getElementById('kissBtn').style.display="inline-block";
-  },2000);
-
-  createHearts();
+  document.getElementById("letter").classList.add("open");
+  startHearts();
 }
 
-function goToKiss(){
-  window.location.href="kiss.html";
-}
-
-function createHearts(){
+function startHearts(){
   setInterval(()=>{
-    const heart=document.createElement('div');
+    const heart=document.createElement("div");
     heart.className="heart";
-    heart.innerText="💖";
+    heart.innerText="💗";
     heart.style.left=Math.random()*100+"vw";
     heart.style.fontSize=(18+Math.random()*18)+"px";
     document.body.appendChild(heart);
-
     setTimeout(()=>heart.remove(),6000);
   },600);
 }
