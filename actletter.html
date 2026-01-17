@@ -41,37 +41,30 @@ h1{
   position:relative;
 }
 
+/* Wrapper */
+.letter-wrapper{
+  position:relative;
+}
+
 /* Envelope */
 .envelope{
   width:380px;
   position:relative;
+  z-index:2;
 }
 
 .envelope img{
   width:100%;
-  display:block;
 }
 
-/* Smaller seal */
+/* Seal */
 .seal{
   width:45px;
   position:absolute;
   top:52%;
   left:50%;
   transform:translate(-50%,-50%);
-  transition:opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Open button */
-.open-btn{
-  margin-top:15px;
-  padding:10px 22px;
-  background:#8b3a3a;
-  color:#fff;
-  border:none;
-  border-radius:20px;
-  font-size:15px;
-  cursor:pointer;
+  transition:all 0.5s ease;
 }
 
 /* Paper */
@@ -79,7 +72,7 @@ h1{
   position:absolute;
   width:360px;
   height:520px;
-  background:url('paper.png') center/cover no-repeat;
+  background:#fdf8f1;
   top:90px;
   left:50%;
   transform:translateX(-50%) scaleY(0);
@@ -89,12 +82,13 @@ h1{
   transition:all 1s ease;
   box-shadow:0 10px 30px rgba(0,0,0,0.25);
   overflow-y:auto;
+  z-index:1;
 }
 
-/* Open state */
+/* OPEN STATE */
 .open .seal{
   opacity:0;
-  transform:translate(-50%,-60%) scale(0.5);
+  transform:translate(-50%,-70%) scale(0.5);
 }
 
 .open .paper{
@@ -108,6 +102,18 @@ h1{
   line-height:1.8;
   font-size:16px;
   white-space:pre-line;
+}
+
+/* Open button */
+.open-btn{
+  margin-top:15px;
+  padding:10px 24px;
+  background:#8b3a3a;
+  color:#fff;
+  border:none;
+  border-radius:22px;
+  font-size:15px;
+  cursor:pointer;
 }
 
 /* Kiss button */
@@ -139,12 +145,11 @@ h1{
 
 .right img{
   max-width:90%;
-  max-height:90%;
   border-radius:15px;
   box-shadow:0 15px 35px rgba(0,0,0,0.3);
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart{
   position:absolute;
   bottom:-20px;
@@ -168,38 +173,39 @@ h1{
 
   <!-- LEFT -->
   <div class="left">
-    <div class="envelope" id="envelope">
-      <img src="envelope.png">
-      <img src="seal.png" class="seal">
+    <div class="letter-wrapper" id="letter">
+
+      <div class="envelope">
+        <img src="envelope.png">
+        <img src="seal.png" class="seal">
+      </div>
+
+      <div class="paper">
+        <p>
+HAPPIEST BIRTHDAY CUTUU 💖  
+
+I know it's not enough but I hope you liked it.
+It's your 20th birthday and I'm so glad to be here with you, it's also the 20th month of us.
+
+I love you so much and I love to love you.
+You are the most important person to me so don't worry I'll never get bored of you.
+
+You always find new ways to irritate me but I'm fine with it as long as you are happy.
+
+Just study properly aur is baar CLAT nhi nikala na toh tu nikal jayega is duniya se mere haatho 💋
+(jk ik ho jaayega)
+
+I LOVE YOU SO MUCH 💋💋
+        </p>
+
+        <button class="kiss-btn" id="kissBtn" onclick="goToKiss()">
+          click for kissi 💋
+        </button>
+      </div>
+
     </div>
 
     <button class="open-btn" onclick="openLetter()">Open 💌</button>
-
-    <div class="paper" id="paper">
-      <p>
-HAPPIEST BIRTHDAY CUTUU 💖  
-
-I know it's not enough but I hope you liked it.  
-It's your 20th birthday and I'm so glad to be here with you, it's also the 20th month of us.  
-
-I love you so much and I love to love you.  
-You are the most important person to me so don't worry I'll never get bored of you.  
-How could I even? You always find new ways to irritate me but I'm fine with it as long as you are happy.  
-
-I'll always be here to support you and love you.  
-Just study properly aur is baar CLAT nhi nikala na toh tu nikal jayega is duniya se mere haatho 💋  
-(jk ik ho jaayega so dw)  
-
-Nhi bhi hua toh it's fine, I'll always be there for you no matter what.  
-I just wish you stay happy and take care of me 🥺  
-
-I LOVE YOU SO MUCH 💋💋
-      </p>
-
-      <button class="kiss-btn" id="kissBtn" onclick="goToKiss()">
-        click for kissi 💋
-      </button>
-    </div>
   </div>
 
   <!-- RIGHT -->
@@ -211,11 +217,11 @@ I LOVE YOU SO MUCH 💋💋
 
 <script>
 function openLetter(){
-  document.getElementById('envelope').classList.add('open');
+  document.getElementById('letter').classList.add('open');
 
   setTimeout(()=>{
     document.getElementById('kissBtn').style.display="inline-block";
-  },2200);
+  },2000);
 
   createHearts();
 }
@@ -230,7 +236,7 @@ function createHearts(){
     heart.className="heart";
     heart.innerText="💖";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(20+Math.random()*20)+"px";
+    heart.style.fontSize=(18+Math.random()*18)+"px";
     document.body.appendChild(heart);
 
     setTimeout(()=>heart.remove(),6000);
