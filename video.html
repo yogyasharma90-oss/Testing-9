@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Background video */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+  z-index: -1;
+}
+
+/* Overlay content */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+/* Play button */
+button {
+  padding: 14px 26px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 192, 203, 0.9);
+  color: #000;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: rgba(255, 182, 193, 1);
+}
+
+/* Bye message */
+#bye {
+  display: none;
+  margin-top: 20px;
+  font-size: 26px;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background video (muted loop) -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+<div class="overlay">
+  <button id="playBtn">Play the video ▶️</button>
+  <div id="bye">bye-bye 💋</div>
+</div>
+
+<script>
+const video = document.getElementById("bgVideo");
+const playBtn = document.getElementById("playBtn");
+const bye = document.getElementById("bye");
+
+playBtn.addEventListener("click", () => {
+  video.muted = false;
+  video.loop = false;
+  video.currentTime = 0;
+
+  // Fullscreen
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  }
+
+  video.play();
+  playBtn.style.display = "none";
+});
+
+video.onended = () => {
+  // Exit fullscreen
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+
+  // Reset background state
+  video.muted = true;
+  video.loop = true;
+  video.play();
+
+  bye.style.display = "block";
+};
+</script>
+
+</body>
+</html>
